@@ -118,8 +118,8 @@ app.get('/api/goods/:count', async (req, res)=>{
     res.send(data_new)
 })
 
-// module.exports = app;
+module.exports = app;
 
-app.listen(3000, () => {
-    console.log("Сервер запущен на порту 3000");
-});
+// app.listen(3000, () => {
+//     console.log("Сервер запущен на порту 3000");
+// });

@@ -14,13 +14,14 @@ app.use(express.json())
 const client = new MongoClient(config.MONGO_CONNECTION_STRING)
 const usersDB = client.db('shopco').collection('users')
 const goodsDB = client.db('shopco').collection('goods')
+const commentsDB = client.db('shopco').collection('comments')
 
 client.connect()
 
 async function run() {
     try {
         await client.connect();
-        console.log("You  connected to MongoDB!");
+        console.log("You are connected to MongoDB!");
     } catch (error) {
         console.error("Помилка підключення MongoDB:", error);
     }
@@ -117,6 +118,22 @@ app.get('/api/goods/:count', async (req, res)=>{
     data_new.reverse();
     res.send(data_new)
 })
+
+app.get('/api/getAllComments', async (req, res)=>{
+    const data = await commentsDB.find().toArray();
+    data.reverse();
+    res.send(data)
+})
+
+/* Дістати коментарі для товару по id */
+app.get('/api/comments/:id', async (req, res)=>{
+    const data = await commentsDB.find({id_good: req.params.id}).toArray(function(err, result) {
+        if (err) throw err;
+        console.log(result);
+      });
+    res.send(data)
+})
+
 
 module.exports = app;
 

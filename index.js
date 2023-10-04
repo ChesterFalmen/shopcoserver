@@ -134,9 +134,19 @@ app.get('/api/comments/:id', async (req, res)=>{
     res.send(data)
 })
 
+/* Отримати останні count коментарів */
+app.get('/api/comments/:count', async (req, res)=>{
+    const data = await commentsDB.find().toArray();
+    const count_goods_arr = data.length;
+    console.log(count_goods_arr);
+    const data_new = data.slice(count_goods_arr-req.params.count);
+    data_new.reverse();
+    res.send(data_new)
+})
+
 
 module.exports = app;
 
-// app.listen(3000, () => {
-//     console.log("Сервер запущен на порту 3000");
-// });
+app.listen(3000, () => {
+    console.log("Сервер запущен на порту 3000");
+});

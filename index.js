@@ -127,6 +127,7 @@ app.put('/api/users/:id', async (req, res)=>{
 })
 
 app.get('/api/getAllComments', async (req, res)=>{
+    console.log(req.body.data2);
     const data = await commentsDB.find().toArray();
     data.reverse();
     res.send(data)
@@ -139,6 +140,46 @@ app.get('/api/comments/:id', async (req, res)=>{
         console.log(result);
       });
     res.send(data)
+})
+
+/* Отримати останні count коментарів */
+app.get('/api/getCountComments/:count', async (req, res)=>{
+    const data = await commentsDB.find().toArray();
+    const count_goods_arr = data.length;
+    console.log(count_goods_arr);
+    const data_new = data.slice(count_goods_arr-req.params.count);
+    data_new.reverse();
+    res.send(data_new)
+})
+
+/* Вставити новий товар */
+app.post('/api/goods/add', async (req, res)=>{
+
+    const name = req.body.name;//string
+    const price = parseInt(req.body.price);//int32
+    const url_image = req.body.url_image;//array
+    const discount = parseInt(req.body.discount);//int32
+    const description = req.body.description;//string
+    const category = req.body.category;//string
+    const sex = req.body.sex;//string
+    const sizes = req.body.sizes;//array
+    const rating = parseInt(req.body.rating);//int32
+    const style = req.body.style;//string
+    const count_sales = parseInt(req.body.count_sales);//int32
+    console.log(name, price, url_image.length, discount != undefined, description, category, sex, sizes.length, rating, style, count_sales);
+    if(name && price && url_image.length && discount != undefined && description && category && sex && sizes.length && rating && style && count_sales != undefined){
+        const good = req.body;
+        const data = await goodsDB.insertOne(good);       
+        res.send({
+            status:200,
+            info: data
+        })
+    }else{
+        res.send({
+            status:400,
+            info:"Incorrect data"
+        })
+    }
 })
 
 

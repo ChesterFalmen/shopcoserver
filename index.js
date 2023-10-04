@@ -119,6 +119,13 @@ app.get('/api/goods/:count', async (req, res)=>{
     res.send(data_new)
 })
 
+/* Додати товар */
+app.put('/api/users/:id', async (req, res)=>{
+    const data = req.body
+    await usersDB.updateOne({ _id: new ObjectId(req.params.id) }, { $set: data });
+    res.send({status:200})
+})
+
 app.get('/api/getAllComments', async (req, res)=>{
     const data = await commentsDB.find().toArray();
     data.reverse();

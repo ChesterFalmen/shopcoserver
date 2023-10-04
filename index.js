@@ -23,7 +23,7 @@ async function run() {
         await client.connect();
         console.log("You are connected to MongoDB!");
     } catch (error) {
-        console.error("Помилка підключення MongoDB:", error);
+        console.error("Error connected to MongoDB:", error);
     }
 }
 run()
@@ -141,6 +141,26 @@ app.get('/api/comments/:id', async (req, res)=>{
       });
     res.send(data)
 })
+
+/*Додати коментарі до товарів*/
+app.post('/api/comments/add', async (req, res)=>{
+    const data = req.body;
+    if(data){
+        await commentsDB.insertOne(data)
+        res.send({
+            status:200,
+            text : "Done"
+        })
+    }else{
+        res.send({
+            status:200,
+            text : "Sorry. Body is empty"
+        })
+    }
+
+
+})
+
 
 /* Отримати останні count коментарів */
 app.get('/api/getCountComments/:count', async (req, res)=>{

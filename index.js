@@ -135,7 +135,7 @@ app.get('/api/comments/:id', async (req, res)=>{
 })
 
 /* Отримати останні count коментарів */
-app.get('/api/comments/:count', async (req, res)=>{
+app.get('/api/getCountComments/:count', async (req, res)=>{
     const data = await commentsDB.find().toArray();
     const count_goods_arr = data.length;
     console.log(count_goods_arr);
@@ -147,6 +147,6 @@ app.get('/api/comments/:count', async (req, res)=>{
 
 module.exports = app;
 
-app.listen(3000, () => {
-    console.log("Сервер запущен на порту 3000");
-});
+// app.listen(3000, () => {
+//     console.log("Сервер запущен на порту 3000");
+// });

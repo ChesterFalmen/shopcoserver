@@ -152,6 +152,27 @@ app.get('/api/getCountComments/:count', async (req, res)=>{
     res.send(data_new)
 })
 
+/* Отримати товари по заданій name категорії */
+app.get('/api/goods/category/:name', async (req, res)=>{
+    const data = await goodsDB.find({category: req.params.name}).toArray();
+    console.log(data);
+    res.send(data);
+})
+
+/* Отримати товари по заданій name стилю */
+app.get('/api/goods/style/:name', async (req, res)=>{
+    const data = await goodsDB.find({style: req.params.name}).toArray();
+    console.log(data);
+    res.send(data);
+})
+
+/* Отримати товари по заданій name статі */
+app.get('/api/goods/sex/:name', async (req, res)=>{
+    const data = await goodsDB.find({sex: req.params.name}).toArray();
+    console.log(data);
+    res.send(data);
+})
+
 /* Вставити новий товар */
 app.post('/api/goods/add', async (req, res)=>{
 

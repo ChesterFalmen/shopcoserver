@@ -15,6 +15,7 @@ const client = new MongoClient(config.MONGO_CONNECTION_STRING)
 const usersDB = client.db('shopco').collection('users')
 const goodsDB = client.db('shopco').collection('goods')
 const commentsDB = client.db('shopco').collection('comments')
+const bannersDB = client.db('shopco').collection('banners')
 
 client.connect()
 
@@ -173,10 +174,8 @@ app.get('/api/getCountComments/:count', async (req, res)=>{
 })
 
 /* Отримати товари по заданій name категорії */
-app.get('/api/goodsFind/category', async (req, res)=>{
-    console.log(req.body.category);
-    const data = await goodsDB.find({category: req.body.category}).toArray();
-    console.log(data);
+app.get('/api/category/:category', async (req, res)=>{
+    const data = await goodsDB.find({category : req.params.category}).toArray();
     res.send(data);
 })
 
@@ -224,6 +223,12 @@ app.post('/api/goods/add', async (req, res)=>{
         })
     }
 })
+
+app.get("/api/banners", async (req, res) =>{
+    const data = await bannersDB.find().toArray();
+    res.send(data);
+
+});
 
 
 module.exports = app;

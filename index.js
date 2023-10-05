@@ -180,15 +180,18 @@ app.get('/api/goodsFind/category', async (req, res)=>{
     res.send(data);
 })
 
-/* Отримати товари по заданій name стилю */
-app.get('/api/goodsFind/style', async (req, res)=>{
-    const data = await goodsDB.find({style: req.body.style}).toArray();
+
+app.get('/api/styles/:style', async (req, res) => {
+    const data = await goodsDB.find( {style: req.params.style}).toArray(function (err, result) {
+        if (err) throw err;
+        console.log(result);
+    });
     res.send(data);
-})
+});
 
 /* Отримати товари по заданій name статі */
-app.get('/api/goodsFind/sex', async (req, res)=>{
-    const data = await goodsDB.find({sex: req.body.name}).toArray();
+app.get('/api/sex/:sex', async (req, res)=>{
+    const data = await goodsDB.find({sex: req.params.sex}).toArray();
     res.send(data);
 })
 

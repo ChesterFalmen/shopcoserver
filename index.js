@@ -120,6 +120,14 @@ app.get('/api/goods/:count', async (req, res)=>{
     res.send(data_new)
 })
 
+/*Отримати рейтинг товарів у кількості count */
+app.get('/api/getRatingGoods/:count', async (req, res)=>{
+    const data = await goodsDB.find().toArray();
+    const sortData = data.sort((a, b) => b.count_sales - a.count_sales)
+    const newData = sortData.slice(0, req.params.count);
+    res.send(newData)
+})
+
 /* Додати товар */
 app.put('/api/users/:id', async (req, res)=>{
     const data = req.body

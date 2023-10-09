@@ -104,8 +104,15 @@ app.delete('/api/users/:id', async (req, res)=>{
 
 /* Отримати всі товари */
 app.get('/api/goods', async (req, res)=>{
-    const data = await goodsDB.find().toArray();
+    const data = await goodsDB.find();
     data.reverse();
+    res.send(data)
+})
+
+/*отримати один товар по id*/
+
+app.get('/api/oneGoods/:id', async (req, res)=>{
+    const data = await goodsDB.findOne({ _id: new ObjectId(req.params.id)});
     res.send(data)
 })
 

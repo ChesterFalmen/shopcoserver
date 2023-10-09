@@ -104,7 +104,7 @@ app.delete('/api/users/:id', async (req, res)=>{
 
 /* Отримати всі товари */
 app.get('/api/goods', async (req, res)=>{
-    const data = await goodsDB.find();
+    const data = await goodsDB.find().toArray();
     data.reverse();
     res.send(data)
 })
@@ -247,7 +247,7 @@ app.get("/api/banners", async (req, res) =>{
 
 
 module.exports = app;
-
+//
 // app.listen(3000, () => {
 //     console.log("Сервер запущен на порту 3000");
 // });

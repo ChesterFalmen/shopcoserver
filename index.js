@@ -16,6 +16,7 @@ const usersDB = client.db('shopco').collection('users')
 const goodsDB = client.db('shopco').collection('goods')
 const commentsDB = client.db('shopco').collection('comments')
 const bannersDB = client.db('shopco').collection('banners')
+const bannerLoginDB = client.db('shopco').collection('loginBanner')
 
 client.connect()
 
@@ -243,7 +244,17 @@ app.get("/api/banners", async (req, res) =>{
     const data = await bannersDB.find().toArray();
     res.send(data);
 
-});
+})
+
+app.get("/api/loginBanner", async (req, res) =>{
+    const data = await bannerLoginDB.findOne();
+    res.send(data);
+
+})
+
+
+
+
 
 
 module.exports = app;

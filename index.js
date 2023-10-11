@@ -243,7 +243,6 @@ app.post('/api/goods/add', async (req, res)=>{
 app.get("/api/banners", async (req, res) =>{
     const data = await bannersDB.find().toArray();
     res.send(data);
-
 })
 
 app.get("/api/loginBanner", async (req, res) =>{
@@ -252,8 +251,12 @@ app.get("/api/loginBanner", async (req, res) =>{
 
 })
 
-
-
+/*Отримати всі товари зі знижкою*/
+app.get("/api/getSaleGoods", async (req, res)=>{
+    const data = await goodsDB.find().toArray();
+    const filteredArr = data.filter(item => !!item.discount );
+    res.send(filteredArr)
+})
 
 
 

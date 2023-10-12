@@ -249,10 +249,11 @@ app.post('/api/goods/add', async (req, res)=>{
     const rating = parseInt(req.body.rating);//int32
     const style = req.body.style;//string
     const count_sales = parseInt(req.body.count_sales);//int32
+    const final_price = price - (price * (discount/100));
     console.log(name, price, url_image.length, discount != undefined, description, category, sex, sizes.length, rating, style, count_sales);
     if(name && price && url_image.length && discount != undefined && description && category && sex && sizes.length && rating && style && count_sales != undefined){
         const good = req.body;
-        const data = await goodsDB.insertOne(good);       
+        const data = await goodsDB.insertOne(good, ...final_price);       
         res.send({
             status:200,
             info: data

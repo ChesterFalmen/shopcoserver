@@ -15,6 +15,8 @@ const client = new MongoClient(config.MONGO_CONNECTION_STRING)
 const usersDB = client.db('shopco').collection('users')
 const goodsDB = client.db('shopco').collection('goods')
 const commentsDB = client.db('shopco').collection('comments')
+const bannersDB = client.db('shopco').collection('banners')
+const bannerLoginDB = client.db('shopco').collection('loginBanner')
 
 client.connect()
 
@@ -23,7 +25,7 @@ async function run() {
         await client.connect();
         console.log("You are connected to MongoDB!");
     } catch (error) {
-        console.error("Помилка підключення MongoDB:", error);
+        console.error("Error connected to MongoDB:", error);
     }
 }
 run()
@@ -108,6 +110,13 @@ app.get('/api/goods', async (req, res)=>{
     res.send(data)
 })
 
+/*отримати один товар по id*/
+
+app.get('/api/oneGoods/:id', async (req, res)=>{
+    const data = await goodsDB.findOne({ _id: new ObjectId(req.params.id)});
+    res.send(data)
+})
+
 
 /* Отримати останні count товарів */
 app.get('/api/goods/:count', async (req, res)=>{
@@ -117,6 +126,14 @@ app.get('/api/goods/:count', async (req, res)=>{
     const data_new = data.slice(count_goods_arr-req.params.count);
     data_new.reverse();
     res.send(data_new)
+})
+
+/*Отримати рейтинг товарів у кількості count */
+app.get('/api/getRatingGoods/:count', async (req, res)=>{
+    const data = await goodsDB.find().toArray();
+    const sortData = data.sort((a, b) => b.count_sales - a.count_sales)
+    const newData = sortData.slice(0, req.params.count);
+    res.send(newData)
 })
 
 /* Додати товар */
@@ -167,6 +184,26 @@ app.get('/api/comments/:id', async (req, res)=>{
     res.send(data)
 })
 
+/*Додати коментарі до товарів*/
+app.post('/api/comments/add', async (req, res)=>{
+    const data = req.body;
+    if(data){
+        await commentsDB.insertOne(data)
+        res.send({
+            status:200,
+            text : "Done"
+        })
+    }else{
+        res.send({
+            status:200,
+            text : "Sorry. Body is empty"
+        })
+    }
+
+
+})
+
+
 /* Отримати останні count коментарів */
 app.get('/api/getCountComments/:count', async (req, res)=>{
     const data = await commentsDB.find().toArray();
@@ -178,20 +215,23 @@ app.get('/api/getCountComments/:count', async (req, res)=>{
 })
 
 /* Отримати товари по заданій name категорії */
-app.get('/api/goodsFind/category', async (req, res)=>{
-    const data = await goodsDB.find({category: req.body.name}).toArray();
+app.get('/api/category/:category', async (req, res)=>{
+    const data = await goodsDB.find({category : req.params.category}).toArray();
     res.send(data);
 })
 
-/* Отримати товари по заданій name стилю */
-app.get('/api/goodsFind/style', async (req, res)=>{
-    const data = await goodsDB.find({style: req.body.name}).toArray();
+
+app.get('/api/styles/:style', async (req, res) => {
+    const data = await goodsDB.find( {style: req.params.style}).toArray(function (err, result) {
+        if (err) throw err;
+        console.log(result);
+    });
     res.send(data);
-})
+});
 
 /* Отримати товари по заданій name статі */
-app.get('/api/goodsFind/sex', async (req, res)=>{
-    const data = await goodsDB.find({sex: req.body.name}).toArray();
+app.get('/api/sex/:sex', async (req, res)=>{
+    const data = await goodsDB.find({sex: req.params.sex}).toArray();
     res.send(data);
 })
 
@@ -225,9 +265,28 @@ app.post('/api/goods/add', async (req, res)=>{
     }
 })
 
+app.get("/api/banners", async (req, res) =>{
+    const data = await bannersDB.find().toArray();
+    res.send(data);
+})
 
-// module.exports = app;
+app.get("/api/loginBanner", async (req, res) =>{
+    const data = await bannerLoginDB.findOne();
+    res.send(data);
 
-app.listen(3000, () => {
-    console.log("Сервер запущен на порту 3000");
-});
+})
+
+/*Отримати всі товари зі знижкою*/
+app.get("/api/getSaleGoods", async (req, res)=>{
+    const data = await goodsDB.find().toArray();
+    const filteredArr = data.filter(item => !!item.discount );
+    res.send(filteredArr)
+})
+
+
+
+module.exports = app;
+//
+// app.listen(3000, () => {
+//     console.log("Сервер запущен на порту 3000");
+// });

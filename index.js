@@ -126,6 +126,31 @@ app.put('/api/users/:id', async (req, res)=>{
     res.send({status:200})
 })
 
+app.post('/api/goods/updatePrice', async (req, res)=>{
+    const data = req.body
+    //await usersDB.updateOne({ _id: new ObjectId(req.params.id) }, { $set: data });
+
+
+    // Найдем все документы в коллекции
+    const documents = await goodsDB.find({}).toArray();
+
+    // Обновим каждый документ, вычислив final_price и обновив запись
+    for (const doc of documents) {
+        const price = doc.price;
+        const discount = doc.discount;
+        const finalPrice = price - ((price * discount) / 100);
+
+        // Обновляем документ с новым полем final_price
+        await goodsDB.updateOne(
+            { _id: doc._id },
+            { $set: { final_price: finalPrice } }
+        );
+    }
+    res.send({status:200})
+
+    console.log('final_price был добавлен в каждую запись коллекции.');
+})
+
 app.get('/api/getAllComments', async (req, res)=>{
     console.log(req.body.data2);
     const data = await commentsDB.find().toArray();
@@ -201,8 +226,8 @@ app.post('/api/goods/add', async (req, res)=>{
 })
 
 
-module.exports = app;
+// module.exports = app;
 
-// app.listen(3000, () => {
-//     console.log("Сервер запущен на порту 3000");
-// });
+app.listen(3000, () => {
+    console.log("Сервер запущен на порту 3000");
+});

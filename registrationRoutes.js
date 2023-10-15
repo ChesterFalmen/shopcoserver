@@ -11,26 +11,27 @@ const registrationUser = async (req, res) =>{
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
         }
-        const isUserBase = await usersDB.findOne({username: req.body.username});
+        const isUserBase = await usersDB.findOne({email: req.body.email});
         console.log(isUserBase);
         if(isUserBase){
-            res.send({
+            return res.send({
                 status:400,
                 info:"Bad Request"
             })
         }else{
-            const {username, password} = req.body;
+            const {username, password, email} = req.body;
             // const tokenRandom = JSON.stringify(Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000);
             // const user = {...data, token:tokenRandom}
 
             const hashPassword = bcrypt.hashSync(password, 7)
             const user = {
                 username: username,
-                password: hashPassword
+                password: hashPassword,
+                email:email
             }
 
             const {insertedId} = await usersDB.insertOne(user);
-            res.send({
+            return res.send({
                 status:'ok',
                 id:insertedId
             })

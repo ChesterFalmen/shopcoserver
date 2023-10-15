@@ -5,40 +5,36 @@ const {secret} = require("./userConfig")
 
 const usersDB = client.db('shopco').collection('users')
 
-const generationToken = (id, email) =>{
+const generationToken = (id) =>{
     const payload = {
-        id,
-        email
+        id
     }
     return jwt.sign(payload, secret, {expiresIn: "24h"})
 }
 
 
 const loginUser = async (req, res) => {
-    const {username, password} = req.body
+    const {password, email} = req.body
 
     try{
-        const isUserBase = await usersDB.findOne({username: username});
+        const isUserBase = await usersDB.findOne({email: email});
 
         if(!isUserBase) {
-            res.send({
+            return res.send({
                 status: 400,
                 info: "Incorrect password or email"
             })
         }
 
         const validPassword = bcrypt.compareSync(password, isUserBase.password)
-
-
         if(isUserBase && !validPassword ){
-            console.log("isUserBase && !validPassword")
-            res.send({
+            return res.send({
                 status:400,
                 info:"Incorrect password "
             })
         }
-        const token = generationToken(isUserBase._id, isUserBase.username )
-        return res.json({token})
+        const token = generationToken(isUserBase._id )
+        return res.json({token, email})
 
     }catch (error) {
         res.status(500).send("Server Error");

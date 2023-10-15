@@ -8,6 +8,8 @@ const commentsRoutes =require("./commentsRoutes")
 const bannersRoutes = require("./bannersRoutes")
 const registrationUser = require("./registrationRoutes")
 const loginUser = require("./loginRoutes")
+const orders = require("./ordersRoutes")
+const authMiddleware = require("./authMiddleware/authMiddleware")
 const {check} = require("express-validator")
 
 
@@ -25,11 +27,14 @@ router.get('/api/category/:category', goodsRoutes.getGoodsByCategory);
 router.get('/api/styles/:style', goodsRoutes.getGoodsByStyle);
 router.get('/api/sex/:sex', goodsRoutes.getGoodsBySex);
 router.post('/api/goods/add', goodsRoutes.addGood);
+router.post('/api/orders/add', authMiddleware,orders.ordersAdd);
+
 router.get('/api/banners', bannersRoutes.getBanners);
 router.get('/api/loginBanner', bannersRoutes.getLoginBanner);
 router.get('/api/getSaleGoods', goodsRoutes.getSaleGoods);
 router.post('/api/registration',[
-    check("username", "Invalid email").isEmail({}),
+    check("email", "Invalid email").isEmail({}),
+    check("userName", "No empty").notEmpty(),
     check("password", "Password should be at least 5 characters").isLength({min:5})
 ], registrationUser.registrationUser );
 

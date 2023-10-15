@@ -19,6 +19,7 @@ router.get('/api/getRatingGoods/:count', goodsRoutes.getRatingGoods);
 router.get('/api/getAllComments', commentsRoutes.getAllComments);
 router.get('/api/comments/:id', commentsRoutes.getCommentsByGoodId);
 router.post('/api/comments/add', commentsRoutes.addComment);
+router.post('/api/goods/updatePrice', goodsRoutes.updateFinalPrise);
 router.get('/api/getCountComments/:count', commentsRoutes.getRecentComments);
 router.get('/api/category/:category', goodsRoutes.getGoodsByCategory);
 router.get('/api/styles/:style', goodsRoutes.getGoodsByStyle);

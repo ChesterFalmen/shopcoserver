@@ -103,9 +103,10 @@ const addGood = async (req,res) => {
         const rating = parseInt(req.body.rating);//int32
         const style = req.body.style;//string
         const count_sales = parseInt(req.body.count_sales);//int32
-        console.log(name, price, url_image.length, discount !== undefined, description, category, sex, sizes.length, rating, style, count_sales);
+        const final_price = price - (price * (discount/100));
+        //console.log(name, price, url_image.length, discount != undefined, description, category, sex, sizes.length, rating, style, count_sales);
         if(name && price && url_image.length && discount !== undefined && description && category && sex && sizes.length && rating && style && count_sales != undefined){
-            const good = req.body;
+            const good = {...req.body, final_price};
             const data = await goodsDB.insertOne(good);
             res.send({
                 status:200,
@@ -117,6 +118,36 @@ const addGood = async (req,res) => {
                 info:"Incorrect data"
             })
         }
+
+    }catch (error) {
+        res.status(500).send("Server Error");
+    }
+}
+
+const updateFinalPrise = async (req, res) => {
+    try{
+        const data = req.body
+        //await usersDB.updateOne({ _id: new ObjectId(req.params.id) }, { $set: data });
+
+
+        // Найдем все документы в коллекции
+        const documents = await goodsDB.find({}).toArray();
+
+        // Обновим каждый документ, вычислив final_price и обновив запись
+        for (const doc of documents) {
+            const price = doc.price;
+            const discount = doc.discount;
+            const finalPrice = price - ((price * discount) / 100);
+
+            // Обновляем документ с новым полем final_price
+            await goodsDB.updateOne(
+                { _id: doc._id },
+                { $set: { final_price: finalPrice } }
+            );
+        }
+        res.send({status:200})
+
+        console.log('final_price был добавлен в каждую запись коллекции.');
     }catch (error) {
         res.status(500).send("Server Error");
     }
@@ -144,5 +175,6 @@ module.exports = {
     getGoodsByStyle,
     getGoodsBySex,
     addGood,
-    getSaleGoods
+    getSaleGoods,
+    updateFinalPrise
 };

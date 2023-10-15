@@ -239,7 +239,7 @@
 //         })
 //     }
 // })
-//
+
 // app.get("/api/banners", async (req, res) =>{
 //     const data = await bannersDB.find().toArray();
 //     res.send(data);

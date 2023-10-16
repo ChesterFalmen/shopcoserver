@@ -15,7 +15,6 @@ const generationToken = (id) =>{
 
 const loginUser = async (req, res) => {
     const {password, email} = req.body
-
     try{
         const isUserBase = await usersDB.findOne({email: email});
 
@@ -25,7 +24,6 @@ const loginUser = async (req, res) => {
                 info: "Incorrect password or email"
             })
         }
-
         const validPassword = bcrypt.compareSync(password, isUserBase.password)
         if(isUserBase && !validPassword ){
             return res.send({
@@ -37,10 +35,23 @@ const loginUser = async (req, res) => {
         return res.json({token, email})
 
     }catch (error) {
-        res.status(500).send("Server Error");
+        return res.status(500).send("Server Error");
     }
 }
 
+const isValideToken = async (req, res) =>{
+    try{
+       return  res.send({
+           "user auth": true
+       })
+    }catch (errors){
+        return res.status(500).send("Server Error");
+    }
+}
+
+
+
 module.exports = {
-    loginUser
+    loginUser,
+    isValideToken
 }

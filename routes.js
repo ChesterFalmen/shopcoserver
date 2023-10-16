@@ -1,14 +1,12 @@
 const Router = require("express");
 const router = new Router;
-
-
-
 const  goodsRoutes =require("./goodsRoutes")
 const commentsRoutes =require("./commentsRoutes")
 const bannersRoutes = require("./bannersRoutes")
 const registrationUser = require("./registrationRoutes")
 const loginUser = require("./loginRoutes")
 const orders = require("./ordersRoutes")
+const users = require ("./userRoutes")
 const authMiddleware = require("./authMiddleware/authMiddleware")
 const {check} = require("express-validator")
 
@@ -28,6 +26,9 @@ router.get('/api/styles/:style', goodsRoutes.getGoodsByStyle);
 router.get('/api/sex/:sex', goodsRoutes.getGoodsBySex);
 router.post('/api/goods/add', goodsRoutes.addGood);
 router.post('/api/orders/add', authMiddleware,orders.ordersAdd);
+router.get("/api/activate/:link",users.activityUser);
+router.post('/api/isAuth/', authMiddleware,loginUser.isValideToken);
+
 
 router.get('/api/banners', bannersRoutes.getBanners);
 router.get('/api/loginBanner', bannersRoutes.getLoginBanner);

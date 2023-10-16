@@ -6,7 +6,7 @@ const authMiddleware = (req, res, next) =>{
     try {
         const token = req.headers.authorization;
         if(!token){
-            return res.status(403).json({message:"user not auth"});
+            return res.status(403).json({"message":"user not auth"});
         }
         const decodeData = jwt.verify(token, secret);
         req.user = decodeData;
@@ -16,6 +16,4 @@ const authMiddleware = (req, res, next) =>{
         res.status(403).json({message:"user not auth"});
     }
 }
-
-
 module.exports = authMiddleware

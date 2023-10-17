@@ -17,7 +17,7 @@ const registrationUser = async (req, res) =>{
         if(isUserBase){
             return res.send({
                 status:400,
-                info:"Bad Request"
+                info:"The user is already logged in"
             })
         }else{
             const {userName, password, email} = req.body;

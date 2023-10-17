@@ -21,20 +21,20 @@ const registrationUser = async (req, res) =>{
             })
         }else{
             const {userName, password, email} = req.body;
-            // const tokenRandom = JSON.stringify(Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000);
-            // const user = {...data, token:tokenRandom}
+            const user = "user"
             const hashPassword = bcrypt.hashSync(password, 7)
-            const user = {
+            const candidate = {
                 userName: userName,
                 password: hashPassword,
-                email:email
+                email:email,
+                roll:user
             }
-            // const sendEmail = await send(email, activationLink )
-            const {insertedId} = await usersDB.insertOne(user);
+
+            const {insertedId} = await usersDB.insertOne(candidate);
             sendMailServiceLink(email,
                 ` https://shopcoserver-git-main-chesterfalmen.vercel.app/api/activate/${insertedId}`)
             return res.send({
-                status:'ok',
+                status: 200,
                 id:insertedId
             })
         }

@@ -21,9 +21,9 @@ const start = async () => {
 
 start();
 
-// module.exports = app;
+module.exports = app;
 
 
-app.listen(3000, () => {
-    console.log(`Server start 3000`);
-});
+// app.listen(3000, () => {
+//     console.log(`Server start 3000`);
+// });

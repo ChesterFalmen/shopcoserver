@@ -32,6 +32,8 @@ const sendMailServiceMassage = (recipient, topic, bodyMassage) => {
 }
 
 const sendMailServiceLink = (recipient, link) => {
+    console.log("recipient",recipient);
+    console.log("link",link);
     const mailOptions = {
         from: 'serhiibondarenko33@gmail.com',
         to: recipient,

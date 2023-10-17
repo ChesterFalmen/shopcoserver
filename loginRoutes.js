@@ -19,29 +19,34 @@ const loginUser = async (req, res) => {
         const isUserBase = await usersDB.findOne({email: email});
 
         if(!isUserBase) {
-            return res.status(400).send("Incorrect password or email")
+            return res.send({
+                status:400,
+                error:"Incorrect password or email"
+            })
 
-            // res.send({
-            //     status: 400,
-            //     info: "Incorrect password or email"
-            // })
+
         }
         const validPassword = bcrypt.compareSync(password, isUserBase.password)
         if(isUserBase && !validPassword ){
-            return res.status(400).send("Incorrect password")
+            return res.send({
+                status:400,
+                error:"Incorrect password"
+            })
 
-            // res.send({
-            //     status:400,
-            //     info:"Incorrect password "
-            // })
         }
         const token = generationToken(isUserBase._id )
-        return res.status(200).send({token, email})
+        return res.send({
+                status:200,
+                info:{token, email}
+                })
 
-        // res.json({token, email})
 
     }catch (error) {
-        return res.status(500).send("Server Error");
+        return res.send({
+                    status:500,
+                    error:"Server Error"
+                })
+
     }
 }
 

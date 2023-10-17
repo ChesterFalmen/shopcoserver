@@ -19,7 +19,7 @@ const loginUser = async (req, res) => {
         const isUserBase = await usersDB.findOne({email: email});
 
         if(!isUserBase) {
-            return res.status(400).send("Incorrect password")
+            return res.status(400).send("Incorrect password or email")
 
             // res.send({
             //     status: 400,

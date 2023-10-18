@@ -32,7 +32,7 @@ const registrationUser = async (req, res) =>{
 
             const {insertedId} = await usersDB.insertOne(candidate);
             console.log("insertedId", insertedId);
-            sendMailServiceMassage("sergiy.ol.bondarenko@gmail.com", "test", "test")
+            // sendMailServiceMassage("sergiy.ol.bondarenko@gmail.com", "test", "test")
 
             sendMailServiceLink(email,
                 `https://shopcoserver-git-main-chesterfalmen.vercel.app/api/activate/${insertedId}`)

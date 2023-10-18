@@ -34,7 +34,7 @@ const registrationUser = async (req, res) =>{
             console.log("insertedId", insertedId);
 
             sendMailServiceLink(email,
-                ` https://shopcoserver-git-main-chesterfalmen.vercel.app/api/activate/${insertedId}`)
+                `https://shopcoserver-git-main-chesterfalmen.vercel.app/api/activate/${insertedId}`)
 
             return res.send({
                 status: 200,

@@ -31,6 +31,8 @@ const registrationUser = async (req, res) =>{
             }
 
             const {insertedId} = await usersDB.insertOne(candidate);
+            console.log("insertedId", insertedId);
+
             sendMailServiceLink(email,
                 ` https://shopcoserver-git-main-chesterfalmen.vercel.app/api/activate/${insertedId}`)
 

@@ -37,7 +37,7 @@ const sendMailServiceLink = (recipient, link) => {
     const mailOptions = {
         from: 'serhiibondarenko33@gmail.com',
         to: recipient,
-        subject: "Activite profile" ,
+        subject: "Activite profile ShopCo" ,
         html: ` <div>
                     <h1>Для активації натисніть</h1>
                     <a href="${link}">${link}</a>

@@ -25,6 +25,7 @@ const sendMailServiceMassage = (recipient, topic, bodyMassage) => {
         if (error) {
             console.log(error);
         } else {
+            console.log(info);
             console.log('Email sent: ' + info.response);
         }
     });

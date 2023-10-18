@@ -13,7 +13,10 @@ const authMiddleware = (req, res, next) =>{
         next()
 
     }catch (error) {
-        res.status(403).json({message:"user not auth"});
+        res.send({
+            status:400,
+            "user auth": false
+        })
     }
 }
 module.exports = authMiddleware

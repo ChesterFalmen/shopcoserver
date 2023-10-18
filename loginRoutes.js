@@ -27,6 +27,7 @@ const loginUser = async (req, res) => {
 
         }
         const validPassword = bcrypt.compareSync(password, isUserBase.password)
+
         if(isUserBase && !validPassword ){
             return res.send({
                 status:400,
@@ -34,7 +35,8 @@ const loginUser = async (req, res) => {
             })
 
         }
-        const token = generationToken(isUserBase._id )
+        const token = generationToken(isUserBase._id );
+
         return res.send({
                 status:200,
                 info:{token, email}
@@ -51,10 +53,13 @@ const loginUser = async (req, res) => {
 }
 
 const isValideToken = async (req, res) =>{
+    console.log(req.token);
     try{
-       return  res.send({
-           "user auth": true
-       })
+        return res.send({
+            status:200,
+            "user auth": true
+        })
+
     }catch (errors){
         return res.status(500).send("Server Error");
     }

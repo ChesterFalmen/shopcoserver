@@ -7,6 +7,8 @@ const ordersAdd = async (req, res) => {
     try {
         const good = req.body;
         const data = await ordersDB.insertOne(good);
+
+
         // sendMailServisMassage("sergiy.ol.bondarenko@gmail.com", "Пошта дан","Пошта дан" )
         sendMailServiseLink("sergiy.ol.bondarenko@gmail.com", "https://www.google.com.ua/?hl=uk")
 

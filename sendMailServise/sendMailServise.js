@@ -6,7 +6,8 @@ const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
         user: 'serhiibondarenko33@gmail.com',
-        pass: config.GMAIL_CONNECTION_STRING
+        pass: "oizh slxc fmyg klwb"
+        // pass: config.GMAIL_CONNECTION_STRING
     }
 
 });
@@ -45,7 +46,7 @@ const sendMailServiceLink = (recipient, link) => {
     };
     transporter.sendMail(mailOptions, function(error, info){
         if (error) {
-            console.log(error);
+            console.log("sendMail error",error);
         } else {
             console.log('Email sent: ' + info.response);
         }

@@ -66,7 +66,6 @@ const isValideToken = async (req, res) =>{
 }
 
 
-
 module.exports = {
     loginUser,
     isValideToken

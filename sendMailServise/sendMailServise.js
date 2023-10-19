@@ -13,12 +13,12 @@ const transporter = nodemailer.createTransport({
 
 
 
-const sendMailServiceMassage = (recipient, topic, bodyMassage) => {
+const sendMailServiceMassage = (recipient, order) => {
     const mailOptions = {
         from: 'serhiibondarenko33@gmail.com',
         to: recipient,
-        subject: topic,
-        text: bodyMassage
+        subject: "Your order has been accepted ShopCo",
+        text: `Your order has been processed. You can view the details in your personal account. Order# ${order}`
     };
 
     transporter.sendMail(mailOptions, function(error, info){
@@ -60,3 +60,4 @@ module.exports = {
     sendMailServiceMassage,
     sendMailServiceLink
 }
+

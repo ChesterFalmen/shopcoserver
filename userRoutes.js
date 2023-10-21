@@ -142,7 +142,6 @@ const supportUser = async (req,res) =>{
             text : "Done"
         })
 
-
     }catch (error) {
         return res.send({
             status:500,
@@ -158,11 +157,15 @@ const resetPassword = async (req,res) => {
         const userId =user._id.toString()
         const randomPassword =generateRandomPassword(6)
         await usersDB.updateOne({_id: new ObjectId(userId)},{
-            $set: {env: randomPassword}
-        })
+            $set: {env: randomPassword}});
         sendMailResetPassword(emailReq,
             `https://shopcoserver-git-main-chesterfalmen.vercel.app/api/activityPassword/${randomPassword}`,
-            randomPassword)
+            randomPassword);
+        return res.send({
+            status:200,
+            message:"Password reset"
+        })
+
 
 
     }catch (error) {

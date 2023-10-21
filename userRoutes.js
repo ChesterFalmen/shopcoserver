@@ -158,7 +158,7 @@ const resetPassword = async (req,res) => {
         const randomPassword =generateRandomPassword(6)
         await usersDB.updateOne({_id: new ObjectId(userId)},{
             $set: {env: randomPassword}});
-        sendMailResetPassword(emailReq,
+        await sendMailResetPassword(emailReq,
             `https://shopcoserver-git-main-chesterfalmen.vercel.app/api/activityPassword/${randomPassword}`,
             randomPassword);
         return res.send({

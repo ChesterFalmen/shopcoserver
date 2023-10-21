@@ -1,7 +1,7 @@
 const nodemailer = require("nodemailer");
 const config = require("../config");
 const password = config.GMAIL_CONNECTION_STRING;
-const passGmail =password.match(/.{1,4}/g).join(' ');
+// const passGmail =password.match(/.{1,4}/g).join(' ');
 
 
 
@@ -10,7 +10,7 @@ const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
         user: 'serhiibondarenko33@gmail.com',
-        pass: passGmail
+        pass: password
     }
 
 });

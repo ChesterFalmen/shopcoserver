@@ -165,6 +165,27 @@ const getSaleGoods = async (req, res) =>{
     }
 }
 
+const search = async (req, res) => {
+    const searchString = req.body.word
+    try{
+        const searchFields = ["name", "description", "category", "style", ];
+        const query = {
+            $or: searchFields.map(field => ({ [field]: { $regex: searchString, $options: "i" } }))
+        };
+        const resultArray = await goodsDB.find(query).toArray();
+        return res.send({
+            status:200,
+            resultArray
+        })
+
+    }catch (error) {
+        return res.send({
+            status:500,
+            message:"Server Error in user processing"
+        })
+    }
+}
+
 
 module.exports = {
     getAllGoods,
@@ -176,5 +197,6 @@ module.exports = {
     getGoodsBySex,
     addGood,
     getSaleGoods,
-    updateFinalPrise
+    updateFinalPrise,
+    search
 };

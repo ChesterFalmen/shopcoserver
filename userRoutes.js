@@ -3,7 +3,8 @@ const { ObjectId } = require("mongodb");
 const { URI } = require("./config");
 const decodeToken = require("./decoder/decoder");
 const bcrypt = require("bcrypt");
-const {sendMailServiceMassage, sendMailServiceMassageSupport} = require("./sendMailServise/sendMailServise");
+const { sendMailServiceMassageSupport, sendMailResetPassword} = require("./sendMailServise/sendMailServise");
+const generateRandomPassword = require("./generationPassword/generationPassword");
 
 const usersDB = client.db('shopco').collection('users');
 const ordersDB = client.db('shopco').collection('orders');
@@ -148,10 +149,44 @@ const supportUser = async (req,res) =>{
             message:"Server Error in user processing"
         })
     }
-
 }
 
+const resetPassword = async (req,res) => {
+    const emailReq = req.body.email
+    try{
+        const user = await usersDB.findOne({email: emailReq});
+        const userId =user._id.toString()
+        const randomPassword =generateRandomPassword(6)
+        await usersDB.updateOne({_id: new ObjectId(userId)},{
+            $set: {env: randomPassword}
+        })
+        sendMailResetPassword(emailReq,
+            `https://shopcoserver-git-main-chesterfalmen.vercel.app/api/activityPassword/${randomPassword}`,
+            randomPassword)
 
+
+    }catch (error) {
+        return res.send({
+            status:500,
+            message:"Server Error"
+        })
+    }
+};
+
+const activityPassword = async (req, res) => {
+    const passwordReq = req.params.link;
+    const hashPassword = bcrypt.hashSync(passwordReq, 7)
+    const user = await usersDB.findOne({ env: passwordReq });
+    if (!user) {
+        throw new Error("User not found");
+    }
+    await usersDB.updateOne(
+        { env: passwordReq },
+        { $set: { password: hashPassword } }
+    );
+    console.log('Password is activated.');
+    return res.redirect(URI);
+};
 
 
 module.exports = {
@@ -160,7 +195,9 @@ module.exports = {
     ordersUser,
     changeUser,
     changeUserPass,
-    supportUser
+    supportUser,
+    resetPassword,
+    activityPassword
 };
 
 

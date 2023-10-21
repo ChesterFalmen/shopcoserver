@@ -37,14 +37,22 @@ router.put('/api/changeUserPass',[
 
 router.post('/api/orders/add', authMiddleware ,productAvailabilityMiddleware,orders.ordersAdd);
 router.get("/api/activate/:link",users.activityUser);
+
+
+router.get("/api/activityPassword/:link",users.activityPassword);
+
+
 router.post('/api/isAuth', authMiddleware,loginUser.isValideToken);
 
 router.post('/api/supportUser', authMiddleware,users.supportUser);
+router.post('/api/resetPassword',users.resetPassword);
 
 
 router.get('/api/banners', bannersRoutes.getBanners);
 router.get('/api/loginBanner', bannersRoutes.getLoginBanner);
 router.get('/api/getSaleGoods', goodsRoutes.getSaleGoods);
+
+router.post('/api/search', goodsRoutes.search);
 
 router.post("/api/aboutUser",authMiddleware, users.aboutUser )
 router.post("/api/userOrders",authMiddleware, users.ordersUser )

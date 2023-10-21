@@ -75,10 +75,34 @@ const sendMailServiceLink = (recipient, link) => {
 
 }
 
+const sendMailResetPassword = (recipient, link, password) => {
+    console.log("recipient",recipient);
+    console.log("link",link);
+    const mailOptions = {
+        from: 'serhiibondarenko33@gmail.com',
+        to: recipient,
+        subject: "Support ShopCo" ,
+        html: ` <div>
+                    <h1>Your new one-time password ${password}</h1>
+                    <h3>Для активації натисніть</h3>
+                    <a href="${link}">${link}</a>
+                </div>`
+    };
+    transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+            console.log("sendMail error",error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    });
+
+}
+
 
 module.exports = {
     sendMailServiceMassage,
     sendMailServiceLink,
-    sendMailServiceMassageSupport
+    sendMailServiceMassageSupport,
+    sendMailResetPassword
 }
 

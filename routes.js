@@ -28,11 +28,18 @@ router.get('/api/sex/:sex', goodsRoutes.getGoodsBySex);
 router.post('/api/goods/add',goodsRoutes.addGood);
 
 
+router.put('/api/changeUser', authMiddleware ,users.changeUser);
+router.put('/api/changeUserPass',[
+    check("password", "Password should be at least 5 characters").isLength({min:5}),
+    ],
+    authMiddleware ,users.changeUserPass);
+
+
 router.post('/api/orders/add', authMiddleware ,productAvailabilityMiddleware,orders.ordersAdd);
-
-
 router.get("/api/activate/:link",users.activityUser);
-router.post('/api/isAuth/', authMiddleware,loginUser.isValideToken);
+router.post('/api/isAuth', authMiddleware,loginUser.isValideToken);
+
+router.post('/api/supportUser', authMiddleware,users.supportUser);
 
 
 router.get('/api/banners', bannersRoutes.getBanners);

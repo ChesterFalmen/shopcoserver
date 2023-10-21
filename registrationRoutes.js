@@ -31,9 +31,10 @@ const registrationUser = async (req, res) =>{
             }
 
             const {insertedId} = await usersDB.insertOne(candidate);
+            const idString = insertedId.toString()
 
             sendMailServiceLink(email,
-                `https://shopcoserver-git-main-chesterfalmen.vercel.app/api/activate/${insertedId}`)
+                `https://shopcoserver-git-main-chesterfalmen.vercel.app/api/activate/${idString}`)
 
             return res.send({
                 status: 200,

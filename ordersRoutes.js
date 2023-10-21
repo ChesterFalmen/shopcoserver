@@ -28,8 +28,8 @@ const ordersAdd = async (req, res) => {
     }
 
     try {
-        const {userName, companyName, streetAddress, apartmentInfo, city, phoneNumber, email,payment } = req.body.personalInfo;
-        const idUser = decoder(req.body.token);
+        const {userName, email, apartmentInfo, city, companyName, phoneNumber, streetAddress } = req.body.personalInfo;
+        const idUser = decoder(req.headers.authorization);
         const userId = new ObjectId(idUser);
         const user = await usersDB.findOne({ _id: userId });
         const userEmail = user.email
@@ -53,10 +53,14 @@ const ordersAdd = async (req, res) => {
             );
         }
         if(req.body){
-            const {goods}= req.body;
+            const {goods, payment, totalValue, orderDate}= req.body;
 
 
-            const {insertedId} = await ordersDB.insertOne({user:userId.toString(), goods, payment, isOpen:true});
+            const {insertedId} = await ordersDB.insertOne({user:userId.toString(), goods,
+                payment:payment,
+                orderDate:orderDate,
+                totalValue:totalValue,
+                isOpen:true});
             sendMailServiceMassage(userEmail,insertedId.toString() );
         }
 

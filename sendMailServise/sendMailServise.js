@@ -32,6 +32,26 @@ const sendMailServiceMassage = (recipient, order) => {
 
 }
 
+const sendMailServiceMassageSupport = (recipient, idMessage) => {
+    const mailOptions = {
+        from: 'serhiibondarenko33@gmail.com',
+        to: recipient,
+        subject: "support service ShopCo",
+        text: `Your appeal is registered under the number# ${idMessage}.
+         Wait for our operator to contact you soon`
+    };
+
+    transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+            console.log(error);
+        } else {
+            console.log(info);
+            console.log('Email sent: ' + info.response);
+        }
+    });
+
+}
+
 const sendMailServiceLink = (recipient, link) => {
     console.log("recipient",recipient);
     console.log("link",link);
@@ -58,6 +78,7 @@ const sendMailServiceLink = (recipient, link) => {
 
 module.exports = {
     sendMailServiceMassage,
-    sendMailServiceLink
+    sendMailServiceLink,
+    sendMailServiceMassageSupport
 }
 

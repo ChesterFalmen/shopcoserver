@@ -104,11 +104,31 @@ const sendMailResetPassword = (recipient, link, password) => {
 
 }
 
+const sendMailHi = (recipient, link, password) => {
+    const mailOptions = {
+        from: 'serhiibondarenko33@gmail.com',
+        to: recipient,
+        subject: "Hi ShopCo" ,
+
+    };
+    transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+            console.log("sendMail error",error);
+        } else {
+            console.log('Email sent: ' + info.response);
+            return info.response
+
+        }
+    });
+
+}
+
 
 module.exports = {
     sendMailServiceMassage,
     sendMailServiceLink,
     sendMailServiceMassageSupport,
-    sendMailResetPassword
+    sendMailResetPassword,
+    sendMailHi
 }
 

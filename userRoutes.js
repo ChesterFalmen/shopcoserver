@@ -3,7 +3,7 @@ const { ObjectId } = require("mongodb");
 const { URI } = require("./config");
 const decodeToken = require("./decoder/decoder");
 const bcrypt = require("bcrypt");
-const { sendMailServiceMassageSupport, sendMailResetPassword} = require("./sendMailServise/sendMailServise");
+const { sendMailServiceMassageSupport, sendMailResetPassword, sendMailHi} = require("./sendMailServise/sendMailServise");
 const generateRandomPassword = require("./generationPassword/generationPassword");
 
 const usersDB = client.db('shopco').collection('users');
@@ -158,6 +158,7 @@ const resetPassword = async (req,res) => {
         const randomPassword =generateRandomPassword(6)
         await usersDB.updateOne({_id: new ObjectId(userId)},{
             $set: {env: randomPassword}});
+        sendMailHi(emailReq)
         await sendMailResetPassword(emailReq,
             `https://shopcoserver-git-main-chesterfalmen.vercel.app/api/activityPassword/${randomPassword}`,
             randomPassword);

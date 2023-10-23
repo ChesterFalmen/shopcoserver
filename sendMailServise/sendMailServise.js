@@ -103,6 +103,7 @@ const sendMailResetPassword = (recipient, link, password) => {
     transporter.sendMail(mailOptions, function(error, info){
         if (error) {
             console.log("sendMail error",error);
+            return error
         } else {
             console.log('Email sent: ' + info.response);
             return info.response

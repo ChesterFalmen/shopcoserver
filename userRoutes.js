@@ -53,8 +53,6 @@ const ordersUser = async (req, res) =>{
             status:200,
             orders
         })
-
-
     }catch (error) {
         return res.send({
             status:500,

@@ -14,7 +14,7 @@ const authMiddleware = (req, res, next) =>{
 
     }catch (error) {
         res.send({
-            status:400,
+            status:407,
             "user auth": false
         })
     }

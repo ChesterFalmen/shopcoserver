@@ -2,6 +2,7 @@ const {client} = require("./db");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const {secret} = require("./userConfig")
+const {ObjectId} = require("mongodb");
 
 const usersDB = client.db('shopco').collection('users')
 
@@ -53,8 +54,18 @@ const loginUser = async (req, res) => {
 }
 
 const isValideToken = async (req, res) =>{
-    console.log(req.token);
+    const token = req.headers.authorization;
     try{
+        const decodeData = jwt.verify(token, secret);
+        const userId = decodeData.id
+        const isUserBase = await usersDB.findOne({_id: new ObjectId(userId)})
+        if(!isUserBase){
+            return res.send({
+                status:400,
+                "user auth": false
+            })
+        }
+
         return res.send({
             status:200,
             "user auth": true

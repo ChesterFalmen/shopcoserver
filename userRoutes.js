@@ -170,7 +170,7 @@ const resetPassword = async (req,res) => {
     }catch (error) {
         return res.send({
             status:500,
-            message:"User not found"
+            message:"User not found1"
         })
     }
 };

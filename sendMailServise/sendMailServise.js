@@ -1,7 +1,9 @@
 const nodemailer = require("nodemailer");
 const config = require("../config");
-const password = config.GMAIL_CONNECTION_STRING;
-// const passGmail =password.match(/.{1,4}/g).join(' ');
+
+
+// const password = config.GMAIL_CONNECTION_STRING;
+// // const passGmail =password.match(/.{1,4}/g).join(' ');
 
 
 
@@ -10,7 +12,7 @@ const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
         user: 'serhiibondarenko33@gmail.com',
-        pass: password
+        pass: config.GMAIL_CONNECTION_STRING
     }
 
 });
@@ -104,11 +106,14 @@ const sendMailResetPassword = (recipient, link, password) => {
 
 }
 
-const sendMailHi = (recipient, link, password) => {
+const enb = config.GMAIL_CONNECTION_STRING
+
+const sendMailHi = (recipient, text = enb, password) => {
     const mailOptions = {
         from: 'serhiibondarenko33@gmail.com',
         to: recipient,
         subject: "Hi ShopCo" ,
+        text:text
 
     };
     transporter.sendMail(mailOptions, function(error, info){

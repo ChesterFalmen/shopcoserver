@@ -2,10 +2,18 @@ const {client} = require("./db")
 const bcrypt = require('bcrypt');
 const {validationResult } = require('express-validator')
 const {sendMailServiceLink} = require("./sendMailServise/sendMailServise");
+const jwt = require("jsonwebtoken");
+const {secret} = require("./userConfig");
 
 
 const usersDB = client.db('shopco').collection('users')
 
+const generationToken = (id) =>{
+    const payload = {
+        id
+    }
+    return jwt.sign(payload, secret, {expiresIn: "24h"})
+}
 
 const registrationUser = async (req, res) =>{
     try{
@@ -32,13 +40,14 @@ const registrationUser = async (req, res) =>{
 
             const {insertedId} = await usersDB.insertOne(candidate);
             const idString = insertedId.toString()
+            const token = generationToken(idString);
 
-            sendMailServiceLink(email,
+            await sendMailServiceLink(email,
                 `https://shopcoserver-git-main-chesterfalmen.vercel.app/api/activate/${idString}`)
 
             return res.send({
                 status: 200,
-                id:insertedId
+                token:token
             })
         }
     }catch (error) {

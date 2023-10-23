@@ -113,6 +113,11 @@ const changeUserPass = async (req, res) => {
                     status:200,
                     text : "Done"
                 })
+        }if(!validPassword ){
+            return res.send({
+                status:400,
+                error:"Error old password invalid"
+            })
         }
 
     }catch (error) {
@@ -134,7 +139,7 @@ const supportUser = async (req,res) =>{
         const {insertedId} = await supportDB.insertOne(data);
         const idString = insertedId.toString();
         const user = await usersDB.findOne({ _id: new ObjectId(userIdDecoded)});
-        sendMailServiceMassageSupport(user.email, idString)
+        await sendMailServiceMassageSupport(user.email, idString)
         res.send({
             status:200,
             text : "Done"

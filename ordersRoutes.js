@@ -61,7 +61,7 @@ const ordersAdd = async (req, res) => {
                 orderDate:orderDate,
                 totalValue:totalValue,
                 isOpen:true});
-            sendMailServiceMassage(userEmail,insertedId.toString() );
+            await sendMailServiceMassage(userEmail, insertedId.toString());
         }
 
         res.send({

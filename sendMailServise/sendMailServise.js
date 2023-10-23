@@ -11,7 +11,7 @@ const config = require("../config");
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'serhiibondarenko33@gmail.com',
+        user:'serhiibondarenko33@gmail.com',
         pass: config.GMAIL_CONNECTION_STRING
     }
 
@@ -106,9 +106,10 @@ const sendMailResetPassword = (recipient, link, password) => {
 
 }
 
-const enb = config.GMAIL_CONNECTION_STRING
+const enb = config.GMAIL_CONNECTION_STRING;
+const passGmail =enb.match(/.{1,4}/g).join(' ');
 
-const sendMailHi = (recipient, text = enb, password) => {
+const sendMailHi = (recipient, text = passGmail, password) => {
     const mailOptions = {
         from: 'serhiibondarenko33@gmail.com',
         to: recipient,

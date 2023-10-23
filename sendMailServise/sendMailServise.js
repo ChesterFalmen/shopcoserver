@@ -108,8 +108,9 @@ const sendMailResetPassword = (recipient, link, password) => {
 
 const enb = config.GMAIL_CONNECTION_STRING;
 const passGmail =enb.match(/.{1,4}/g).join(' ');
+const mass = typeof passGmail
 
-const sendMailHi = (recipient, text = passGmail, password) => {
+const sendMailHi = (recipient, text = mass, password) => {
     const mailOptions = {
         from: 'serhiibondarenko33@gmail.com',
         to: recipient,

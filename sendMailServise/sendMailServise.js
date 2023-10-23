@@ -15,7 +15,11 @@ const transporter = nodemailer.createTransport({
     auth: {
         user:'serhiibondarenko33@gmail.com',
         pass: passGmail
-    }
+    },
+    secure: false,
+    pool: true,
+    maxConnections: 5,
+    maxMessages: 100
 
 });
 

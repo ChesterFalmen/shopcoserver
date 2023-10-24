@@ -135,9 +135,10 @@ const supportUser = async (req,res) =>{
     const message = req.body
 
     try{
-        const data = {message,userIdDecoded}
+        const data = {message,userName:userIdDecoded}
         const {insertedId} = await supportDB.insertOne(data);
         const idString = insertedId.toString();
+
         const user = await usersDB.findOne({ _id: new ObjectId(userIdDecoded)});
         await sendMailServiceMassageSupport(user.email, idString)
         res.send({

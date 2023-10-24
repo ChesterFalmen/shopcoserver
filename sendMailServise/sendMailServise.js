@@ -66,8 +66,8 @@ const sendMailResetPassword = async (recipient, link, password) => {
         to: recipient,
         subject: "Support ShopCo",
         html: `<div>
-                <h1>Your new one-time password ${password}</h1>
-                <h3>Для активації натисніть</h3>
+                <h1>Your new one-time password :${password}</h1>
+                <h3>To activate, follow the link. Be sure to change the password in your personal account.</h3>
                 <a href="${link}">${link}</a>
             </div>`
     };

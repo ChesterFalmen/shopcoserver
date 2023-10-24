@@ -187,7 +187,7 @@ const activityPassword = async (req, res) => {
     }
     await usersDB.updateOne(
         { env: passwordReq },
-        { $set: { password: hashPassword } }
+        { $set: { password: hashPassword, env:"" } }
     );
     console.log('Password is activated.');
     return res.redirect(URI);

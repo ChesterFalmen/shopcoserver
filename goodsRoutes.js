@@ -104,8 +104,10 @@ const addGood = async (req,res) => {
         const style = req.body.style;//string
         const count_sales = parseInt(req.body.count_sales);//int32
         const final_price = price - (price * (discount/100));
+        const details  = req.body.details ;//string
+        const about   = req.body.about  ;//string
         //console.log(name, price, url_image.length, discount != undefined, description, category, sex, sizes.length, rating, style, count_sales);
-        if(name && price && url_image.length && discount !== undefined && description && category && sex && sizes.length && rating && style && count_sales != undefined){
+        if(name && price && url_image.length && about && details && discount !== undefined && description && category && sex && sizes.length && rating && style && count_sales != undefined){
             const good = {...req.body, final_price};
             const data = await goodsDB.insertOne(good);
             res.send({

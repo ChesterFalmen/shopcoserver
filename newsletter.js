@@ -20,6 +20,7 @@ const addNewsletter = async (req, res) => {
             await sendAddNewsletter(email)
             return res.send({
                 status: 200,
+                text:"Done"
             })
         }else{
             return res.send({

@@ -1,14 +1,16 @@
 const Router = require("express");
 const router = new Router;
-const  goodsRoutes =require("./goodsRoutes")
-const commentsRoutes =require("./commentsRoutes")
-const bannersRoutes = require("./bannersRoutes")
-const registrationUser = require("./registrationRoutes")
-const loginUser = require("./loginRoutes")
-const orders = require("./ordersRoutes")
-const users = require ("./userRoutes")
+const  goodsRoutes =require("./goodsRoutes");
+const commentsRoutes =require("./commentsRoutes");
+const bannersRoutes = require("./bannersRoutes");
+const registrationUser = require("./registrationRoutes");
+const loginUser = require("./loginRoutes");
+const orders = require("./ordersRoutes");
+const users = require ("./userRoutes");
+const newsletter = require("./newsletter");
+
 const authMiddleware = require("./authMiddleware/authMiddleware")
-const {check} = require("express-validator")
+const {check} = require("express-validator");
 const productAvailabilityMiddleware = require("./authMiddleware/productАvailabilityMiddleware");
 
 
@@ -56,11 +58,13 @@ router.post('/api/search', goodsRoutes.search);
 
 router.post("/api/aboutUser",authMiddleware, users.aboutUser )
 router.post("/api/userOrders",authMiddleware, users.ordersUser )
+router.post("/api/addNewsletter",[
+    check("email", "Invalid email").isEmail({})], newsletter.addNewsletter)
 
 router.post('/api/registration',[
     check("email", "Invalid email").isEmail({}),
     check("userName", "No empty").notEmpty(),
-    check("password", "Password should be at least 5 characters").isLength({min:5})
+    check("password", "Password should be at least 5 characters").isLength({min:8})
 ], registrationUser.registrationUser );
 
 router.post('/api/login', loginUser.loginUser);

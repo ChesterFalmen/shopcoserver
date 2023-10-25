@@ -27,6 +27,16 @@ const sendMail = async (mailOptions) => {
     }
 };
 
+const sendAddNewsletter = async (email) =>{
+    const mailOptions = {
+        from: 'serhiibondarenko33@gmail.com',
+        to: email,
+        subject: "Thank you for subscribing to the store ShopCo",
+        text:"Now you will receive notifications about new products and special offers."
+    };
+    return await sendMail(mailOptions);
+}
+
 const sendMailServiceMassage = async (recipient, order) => {
     const mailOptions = {
         from: 'serhiibondarenko33@gmail.com',
@@ -81,4 +91,5 @@ module.exports = {
     sendMailServiceLink,
     sendMailServiceMassageSupport,
     sendMailResetPassword,
+    sendAddNewsletter
 };

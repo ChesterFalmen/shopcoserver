@@ -5,7 +5,7 @@ const goodsDB = client.db('shopco').collection('goods');
 
 const checkCount = (arr) => {
     for (let i = 0; i < arr.length; i++) {
-        if (arr[i].count <= 0) {
+        if (arr[i].count < 0) {
             return false;
         }
     }

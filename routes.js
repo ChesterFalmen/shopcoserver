@@ -16,6 +16,9 @@ const productAvailabilityMiddleware = require("./authMiddleware/productАvailabi
 
 
 router.get('/api/goods', goodsRoutes.getAllGoods);
+router.get('/api/product', goodsRoutes.product);
+
+
 router.get('/api/oneGoods/:id', goodsRoutes.getOneGood);
 router.get('/api/goods/:count', goodsRoutes.getRecentGoods);
 router.get('/api/getRatingGoods/:count', goodsRoutes.getRatingGoods);

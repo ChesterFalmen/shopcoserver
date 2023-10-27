@@ -188,6 +188,117 @@ const search = async (req, res) => {
     }
 }
 
+// const product = async (req, res) => {
+//     const queryParams = req.query;
+//     console.log(queryParams);
+//     const searchWord = queryParams.search || "all";
+//     const sex = queryParams.sex || "all";
+//     const category = queryParams.category || "all";
+//     const style = queryParams.style || "all";
+//     const size = queryParams.size || "all";
+//     const minPrice = parseInt(queryParams.minPrice) || 0; // конвертуємо у числовий формат
+//     const maxPrice = parseInt(queryParams.maxPrice) || Number.MAX_SAFE_INTEGER; // конвертуємо у числовий формат
+//
+//     const query = {
+//         $and: [
+//             {
+//                 $or: [
+//                     { sex: sex },
+//                     { category: category },
+//                     {style:style},
+//                     { "sizes.size": size, "sizes.count": { $gt: 0 } }
+//                 ]
+//             },
+//             {
+//                 $and: [
+//                     { price: { $gte: minPrice } },
+//                     { price: { $lte: maxPrice } }
+//                 ]
+//             },
+//             {
+//                 $or: [
+//                     { name: { $regex: searchWord, $options: 'i' } },
+//                     { category: { $regex: searchWord, $options: 'i' } },
+//                     { style: { $regex: searchWord, $options: 'i' } },
+//                     { description: { $regex: searchWord, $options: 'i' } }
+//                 ]
+//             }
+//         ]
+//     };
+//
+//     try {
+//         const products = await goodsDB.find(query).toArray();
+//         res.json(products);
+//     } catch (error) {
+//         return res.status(500).send({
+//             status: 500,
+//             message: "Server Error in user processing"
+//         });
+//     }
+// };
+
+const product = async (req, res) => {
+    const queryParams = req.query;
+    const search = queryParams.search || "all";
+    const sex = queryParams.sex || "all";
+    const category = queryParams.category || "all";
+    const style = queryParams.style || "all";
+    const size = queryParams.size || "all";
+    const minPrice = queryParams.minPrice || 0;
+    const maxPrice = queryParams.maxPrice || Number.MAX_SAFE_INTEGER;
+    const page = parseInt(queryParams.page) || 1;
+    const limit = parseInt(queryParams.limit) || 12;
+    const skip = (page - 1) * limit;
+
+    const query = {
+
+    };
+
+    if (sex !== "all") {
+        query.sex = sex;
+    }
+
+    if (style !== "all") {
+        query.style = style;
+    }
+    if (category !== "all") {
+        query.category = category;
+    }
+    if (minPrice || maxPrice) {
+        query.final_price = {
+            $gte: parseInt(minPrice),
+            $lte: parseInt(maxPrice)
+        };
+    }
+    if (size !== "all") {
+        query.sizes = {
+            $elemMatch: {
+                size: size,
+                count: { $gt: 0 }
+            }
+        };
+    }
+
+    if (search !== "all") {
+        const regex = new RegExp(search, 'i');
+        query.name = regex;
+    }
+
+    try {
+        const products = await goodsDB.find(query).skip(skip).limit(limit).toArray();
+
+        res.json(products);
+    } catch (error) {
+        return res.status(500).send({
+            status: 500,
+            message: "Server Error in user processing"
+        });
+    }
+};
+
+
+
+
 
 module.exports = {
     getAllGoods,
@@ -200,5 +311,6 @@ module.exports = {
     addGood,
     getSaleGoods,
     updateFinalPrise,
-    search
+    search,
+    product
 };

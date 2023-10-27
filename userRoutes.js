@@ -159,7 +159,7 @@ const resetPassword = async (req,res) => {
     try{
         const user = await usersDB.findOne({email: emailReq});
         const userId =user._id.toString()
-        const randomPassword =generateRandomPassword(6)
+        const randomPassword =generateRandomPassword(8)
         await usersDB.updateOne({_id: new ObjectId(userId)},{
             $set: {env: randomPassword}});
         await sendMailResetPassword(emailReq,

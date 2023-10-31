@@ -12,6 +12,8 @@ const newsletter = require("./newsletter");
 const authMiddleware = require("./authMiddleware/authMiddleware")
 const {check} = require("express-validator");
 const productAvailabilityMiddleware = require("./authMiddleware/productАvailabilityMiddleware");
+const authMiddlewareBasket = require("./authMiddleware/authMiddlewareBasket");
+const basket = require("./basketRoutes")
 
 
 
@@ -40,7 +42,10 @@ router.put('/api/changeUserPass',[
     authMiddleware ,users.changeUserPass);
 
 
-router.post('/api/orders/add', authMiddleware ,productAvailabilityMiddleware,orders.ordersAdd);
+// router.post('/api/orders/add', authMiddleware ,productAvailabilityMiddleware,orders.ordersAdd);
+router.post('/api/orders/add', authMiddlewareBasket, productAvailabilityMiddleware ,orders.ordersAdd);
+
+
 router.get("/api/activate/:link",users.activityUser);
 
 
@@ -58,6 +63,8 @@ router.get('/api/loginBanner', bannersRoutes.getLoginBanner);
 router.get('/api/getSaleGoods', goodsRoutes.getSaleGoods);
 
 router.post('/api/search', goodsRoutes.search);
+
+router.post('/api/basket', basket.refreshBasket);
 
 router.post("/api/aboutUser",authMiddleware, users.aboutUser )
 router.post("/api/userOrders",authMiddleware, users.ordersUser )

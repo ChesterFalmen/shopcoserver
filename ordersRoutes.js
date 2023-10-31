@@ -1,6 +1,6 @@
 const { client } = require("./db");
 const { sendMailServiceMassage } = require("./sendMailServise/sendMailServise");
-const decoder = require("./decoder/decoder");
+
 const { ObjectId } = require("mongodb");
 const modifyArray = require("./createrNewArrSizes/createrNewArrSizes")
 
@@ -8,7 +8,10 @@ const ordersDB = client.db('shopco').collection('orders');
 const usersDB = client.db('shopco').collection('users');
 const goodsDB = client.db('shopco').collection('goods');
 
+
+
 const ordersAdd = async (req, res) => {
+
     try {
         const goodsArr = req.body.goods;
         for (let i = 0; i < goodsArr.length; i++) {
@@ -28,47 +31,23 @@ const ordersAdd = async (req, res) => {
     }
 
     try {
-        const {userName, email, apartmentInfo, city, companyName, phoneNumber, streetAddress } = req.body.personalInfo;
-        const idUser = decoder(req.headers.authorization);
-        const userId = new ObjectId(idUser);
-        const user = await usersDB.findOne({ _id: userId });
-        const userEmail = user.email
-
-
-        if (user) {
-            await usersDB.updateOne(
-                { _id: userId },
-                {
-                    $set: {
-                        email:email,
-                        userName:userName,
-                        companyName: companyName,
-                        apartmentInfo: apartmentInfo,
-                        streetAddress: streetAddress,
-                        city: city,
-                        phoneNumber: phoneNumber,
-
-                    }
-                }
-            );
-        }
-        if(req.body){
-            const {goods, payment, totalValue, orderDate}= req.body;
-
-
-            const {insertedId} = await ordersDB.insertOne({user:userId.toString(), goods,
+        const {goods, payment, totalValue, orderDate}= req.body;
+        const id = new ObjectId(req.user)
+        const userEmail = await usersDB.findOne({_id:id})
+        const {insertedId} = await ordersDB.insertOne({user:req.user.toString(), goods,
                 payment:payment,
                 orderDate:orderDate,
                 totalValue:totalValue,
                 isOpen:true});
-            await sendMailServiceMassage(userEmail, insertedId.toString());
-        }
 
+        await sendMailServiceMassage(userEmail.email, insertedId.toString());
         res.send({
             status: 200,
             text : "Done",
 
         });
+
+
     } catch (error) {
         res.status(500).send("Server Error in user processing");
     }

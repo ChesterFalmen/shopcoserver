@@ -55,7 +55,7 @@ const refreshBasket = async (req,res) =>{
             )
             return res.send({
                 status:200,
-                basket:newArr
+                basket:basket
             })
         }else{
             await basketDB.insertOne({

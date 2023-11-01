@@ -1,31 +1,74 @@
-
 const {client} = require("./db");
 const mergeArrays = require ("./merginArray/merginArr");
+const decodeToken = require("./decoder/decoder");
 
 
+const basketDB = client.db('shopco').collection('basket');
 
 const refreshBasket = async (req,res) =>{
-    const {goods} = req.body
+    const {basket} = req.body
+    const userIdCoded = req.headers.authorization;
+    const userIdDecoded = decodeToken(userIdCoded);
+    const basketUser = await basketDB.findOne({user:userIdDecoded});
+
     try {
-        const newArr = mergeArrays( arrOld, goods)
-        console.log("refreshBasket", newArr)
+        if (basketUser){
+            const newArr = mergeArrays( basketUser.basket, basket);
+            await basketDB.updateOne(
+                {user:userIdDecoded},
+                {$set:{basket:newArr}}
+
+            )
+            return res.send({
+                status:200,
+                basket:newArr
+            })
+        }else{
+            await basketDB.insertOne({
+                user:userIdDecoded,
+                basket:basket
+            })
+            return res.send({
+                status:200,
+                basket:basket
+            })
+        }
+
     }catch (error) {
         return res.status(500).send("Server Error in goods processing");
+    }
 
+}
+
+const getBasket = async (req, res)=> {
+    const userIdCoded = req.headers.authorization;
+    const userIdDecoded = decodeToken(userIdCoded);
+    const basketUser = await basketDB.findOne({user:userIdDecoded});
+    try{
+        if(basketUser){
+            return res.send({
+                status:200,
+                basket:basketUser.basket
+            })
+        }else {
+            await basketDB.insertOne({
+                user:userIdDecoded,
+                basket:[]
+            })
+            return res.send({
+                status:200,
+                basket:[]
+            })
+        }
+
+    }catch (error) {
+        return res.status(500).send("Server Error in goods processing");
     }
 }
 
-const arrOld = [
-    {
-        _id:"653c9e1a7d0e3df16ac9e9cf" ,
-        selectedSize : "L"
-    },
-    // {
-    //     _id:"6529234342f9d6355ab84916" ,
-    //     selectedSize : "XL"
-    // }
-]
+
 
 module.exports = {
-    refreshBasket
+    refreshBasket,
+    getBasket
 }

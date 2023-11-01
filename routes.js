@@ -64,7 +64,8 @@ router.get('/api/getSaleGoods', goodsRoutes.getSaleGoods);
 
 router.post('/api/search', goodsRoutes.search);
 
-router.post('/api/basket', basket.refreshBasket);
+router.post('/api/addBasket', authMiddleware, basket.refreshBasket);
+router.post('/api/getBasket', authMiddleware, basket.getBasket);
 
 router.post("/api/aboutUser",authMiddleware, users.aboutUser )
 router.post("/api/userOrders",authMiddleware, users.ordersUser )

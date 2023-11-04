@@ -192,13 +192,13 @@ const product = async (req, res) => {
     const category = queryParams.category || "all";
     const style = queryParams.style || "all";
     const size = queryParams.size || "all";
-    const minPrice = queryParams.minPrice || 0;
-    const maxPrice = queryParams.maxPrice || Number.MAX_SAFE_INTEGER;
+    const minPrice = queryParams.minprice || 0;
+    const maxPrice = queryParams.maxprice || Number.MAX_SAFE_INTEGER;
     const page = parseInt(queryParams.page) || 1;
     const limit = parseInt(queryParams.limit) || 12;
     const skip = (page - 1) * limit;
     const sort = queryParams.sort || "all";
-    const hasDiscount = queryParams.hasDiscount || "all";
+    const hasDiscount = queryParams.hasdiscount || "all";
 
     const query = {
 
@@ -240,9 +240,9 @@ const product = async (req, res) => {
     }
 
     let sortQuery = {};
-    if (sort === "maxPrice") {
+    if (sort === "maxprice") {
         sortQuery = { final_price: -1 };
-    } else if (sort === "minPrice") {
+    } else if (sort === "minprice") {
         sortQuery = { final_price: 1 };
     } else if (sort === "old") {
         sortQuery = {_id: 1 };

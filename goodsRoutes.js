@@ -248,6 +248,10 @@ const product = async (req, res) => {
         sortQuery = {_id: 1 };
     } else if (sort === "new") {
         sortQuery = {_id: -1 };
+    }else if (sort === "az") {
+        sortQuery = {name: 1 };
+    }else if (sort === "za") {
+        sortQuery = {name: -1 };
     }
 
 

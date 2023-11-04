@@ -255,7 +255,7 @@ const product = async (req, res) => {
         const products = await goodsDB.find(query).sort(sortQuery).skip(skip).limit(limit).toArray();
         res.send({
             status:200,
-            data:products
+            products
         })
 
 

@@ -289,3 +289,4 @@ module.exports = {
     search,
     product
 };
+

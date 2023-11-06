@@ -223,7 +223,7 @@ const product = async (req, res) => {
     if (size !== "all") {
         query.sizes = {
             $elemMatch: {
-                size: size,
+                size: size.toUpperCase(),
                 count: { $gt: 0 }
             }
         };

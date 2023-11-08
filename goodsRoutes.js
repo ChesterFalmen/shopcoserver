@@ -256,9 +256,12 @@ const product = async (req, res) => {
 
 
     try {
+        const totalCount = await goodsDB.countDocuments(query);
+        const hasNextPage = skip + limit < totalCount;
         const products = await goodsDB.find(query).sort(sortQuery).skip(skip).limit(limit).toArray();
         res.send({
             status:200,
+            hasNextPage: hasNextPage,
             products
         })
 

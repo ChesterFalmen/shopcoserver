@@ -3,15 +3,15 @@ const {ObjectId} = require("mongodb");
 
 const goodsDB = client.db('shopco').collection('goods')
 
-
-const getAllGoods = async (req, res) => {
-    try {
-        const data = await goodsDB.find().toArray();
-        res.send(data);
-    } catch (error) {
-        res.status(500).send("Server Error");
-    }
-};
+//
+// const getAllGoods = async (req, res) => {
+//     try {
+//         const data = await goodsDB.find().toArray();
+//         res.send(data);
+//     } catch (error) {
+//         res.status(500).send("Server Error");
+//     }
+// };
 
 
 const getOneGood = async (req, res) => {
@@ -42,51 +42,51 @@ const getRecentGoods = async (req, res) => {
 
 
 
-const getRatingGoods = async (req, res) =>{
-    try{
-        const data = await goodsDB.find().toArray();
-        const sortData = data.sort((a, b) => b.count_sales - a.count_sales)
-        const newData = sortData.slice(0, req.params.count);
-        res.send(newData)
-    }catch (error) {
-        res.status(500).send("Server Error");
-    }
-}
+// const getRatingGoods = async (req, res) =>{
+//     try{
+//         const data = await goodsDB.find().toArray();
+//         const sortData = data.sort((a, b) => b.count_sales - a.count_sales)
+//         const newData = sortData.slice(0, req.params.count);
+//         res.send(newData)
+//     }catch (error) {
+//         res.status(500).send("Server Error");
+//     }
+// }
 
 
-const getGoodsByCategory = async (req,res) => {
-    try {
-        const data = await goodsDB.find({category : req.params.category}).toArray();
-        res.send(data);
-    }catch (error) {
-        res.status(500).send("Server Error");
-    }
-}
-
-
-
-const getGoodsByStyle = async (req, res) => {
-    try{
-        const data = await goodsDB.find( {style: req.params.style}).toArray(function (err, result) {
-            if (err) throw err;
-            console.log(result);
-        });
-        res.send(data);
-    }catch (error) {
-        res.status(500).send("Server Error");
-    }
-}
+// const getGoodsByCategory = async (req,res) => {
+//     try {
+//         const data = await goodsDB.find({category : req.params.category}).toArray();
+//         res.send(data);
+//     }catch (error) {
+//         res.status(500).send("Server Error");
+//     }
+// }
 
 
 
-const getGoodsBySex = async (req, res) =>{
-    try{
-        const data = await goodsDB.find({sex: req.params.sex}).toArray();
-        res.send(data);
-    }catch (error) {
-        res.status(500).send("Server Error");
-    }
-}
+// const getGoodsByStyle = async (req, res) => {
+//     try{
+//         const data = await goodsDB.find( {style: req.params.style}).toArray(function (err, result) {
+//             if (err) throw err;
+//             console.log(result);
+//         });
+//         res.send(data);
+//     }catch (error) {
+//         res.status(500).send("Server Error");
+//     }
+// }
+
+
+
+// const getGoodsBySex = async (req, res) =>{
+//     try{
+//         const data = await goodsDB.find({sex: req.params.sex}).toArray();
+//         res.send(data);
+//     }catch (error) {
+//         res.status(500).send("Server Error");
+//     }
+// }
 
 
 
@@ -126,30 +126,30 @@ const addGood = async (req,res) => {
     }
 }
 
-const updateFinalPrise = async (req, res) => {
-    try{
-
-        const documents = await goodsDB.find({}).toArray();
-
-        // Обновим каждый документ, вычислив final_price и обновив запись
-        for (const doc of documents) {
-            const price = doc.price;
-            const discount = doc.discount;
-            const finalPrice = price - ((price * discount) / 100);
-
-            // Обновляем документ с новым полем final_price
-            await goodsDB.updateOne(
-                { _id: doc._id },
-                { $set: { final_price: finalPrice } }
-            );
-        }
-        res.send({status:200})
-
-        console.log('final_price был добавлен в каждую запись коллекции.');
-    }catch (error) {
-        res.status(500).send("Server Error");
-    }
-}
+// const updateFinalPrise = async (req, res) => {
+//     try{
+//
+//         const documents = await goodsDB.find({}).toArray();
+//
+//         // Обновим каждый документ, вычислив final_price и обновив запись
+//         for (const doc of documents) {
+//             const price = doc.price;
+//             const discount = doc.discount;
+//             const finalPrice = price - ((price * discount) / 100);
+//
+//             // Обновляем документ с новым полем final_price
+//             await goodsDB.updateOne(
+//                 { _id: doc._id },
+//                 { $set: { final_price: finalPrice } }
+//             );
+//         }
+//         res.send({status:200})
+//
+//         console.log('final_price был добавлен в каждую запись коллекции.');
+//     }catch (error) {
+//         res.status(500).send("Server Error");
+//     }
+// }
 
 
 
@@ -184,6 +184,42 @@ const search = async (req, res) => {
     }
 }
 
+const productOther = async (req, res) => {
+    const queryParams = req.query;
+    const page = parseInt(queryParams.page) || 1;
+    const limit = parseInt(queryParams.limit) || 9;
+    const skip = (page - 1) * limit;
+    const sort = queryParams.sort || "all";
+
+    const query = {
+
+    };
+
+
+    let sortQuery = {};
+    if (sort === "topsales") {
+        sortQuery = { count_sales: -1 };
+    } else if (sort === "new") {
+        sortQuery = {_id: -1 };
+    }
+
+    try {
+
+        const products = await goodsDB.find(query).sort(sortQuery).skip(skip).limit(limit).toArray();
+        res.send({
+            status:200,
+            products
+        })
+
+    } catch (error) {
+        return res.status(500).send({
+            status: 500,
+            message: "Server Error in user processing"
+        });
+    }
+};
+
+
 
 const product = async (req, res) => {
     const queryParams = req.query;
@@ -195,7 +231,7 @@ const product = async (req, res) => {
     const minPrice = queryParams.minprice || 0;
     const maxPrice = queryParams.maxprice || Number.MAX_SAFE_INTEGER;
     const page = parseInt(queryParams.page) || 1;
-    const limit = parseInt(queryParams.limit) || 12;
+    const limit = parseInt(queryParams.limit) || 9;
     const skip = (page - 1) * limit;
     const sort = queryParams.sort || "all";
     const hasDiscount = queryParams.hasdiscount || "all";
@@ -279,17 +315,18 @@ const product = async (req, res) => {
 
 
 module.exports = {
-    getAllGoods,
+    // getAllGoods,
     getOneGood,
     getRecentGoods,
-    getRatingGoods,
-    getGoodsByCategory,
-    getGoodsByStyle,
-    getGoodsBySex,
+    // getRatingGoods,
+    // getGoodsByCategory,
+    // getGoodsByStyle,
+    // getGoodsBySex,
     addGood,
     getSaleGoods,
-    updateFinalPrise,
+    // updateFinalPrise,
     search,
-    product
+    product,
+    productOther
 };
 

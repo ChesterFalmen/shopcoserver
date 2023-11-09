@@ -17,21 +17,22 @@ const basket = require("./basketRoutes")
 
 
 
-router.get('/api/goods', goodsRoutes.getAllGoods);
+// router.get('/api/goods', goodsRoutes.getAllGoods);
 router.get('/api/product', goodsRoutes.product);
+router.get('/api/productother', goodsRoutes.productOther);
 
 
 router.get('/api/oneGoods/:id', goodsRoutes.getOneGood);
 router.get('/api/goods/:count', goodsRoutes.getRecentGoods);
-router.get('/api/getRatingGoods/:count', goodsRoutes.getRatingGoods);
+// router.get('/api/getRatingGoods/:count', goodsRoutes.getRatingGoods);
 router.get('/api/getAllComments', commentsRoutes.getAllComments);
 router.get('/api/comments/:id', commentsRoutes.getCommentsByGoodId);
 router.post('/api/comments/add', commentsRoutes.addComment);
-router.post('/api/goods/updatePrice', goodsRoutes.updateFinalPrise);
+// router.post('/api/goods/updatePrice', goodsRoutes.updateFinalPrise);
 router.get('/api/getCountComments/:count', commentsRoutes.getRecentComments);
-router.get('/api/category/:category', goodsRoutes.getGoodsByCategory);
-router.get('/api/styles/:style', goodsRoutes.getGoodsByStyle);
-router.get('/api/sex/:sex', goodsRoutes.getGoodsBySex);
+// router.get('/api/category/:category', goodsRoutes.getGoodsByCategory);
+// router.get('/api/styles/:style', goodsRoutes.getGoodsByStyle);
+// router.get('/api/sex/:sex', goodsRoutes.getGoodsBySex);
 router.post('/api/goods/add',goodsRoutes.addGood);
 
 

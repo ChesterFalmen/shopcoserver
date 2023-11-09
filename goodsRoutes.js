@@ -192,7 +192,6 @@ const productOther = async (req, res) => {
     const sort = queryParams.sort || "all";
 
     const query = {
-
     };
 
     let sortQuery = {};

@@ -186,6 +186,8 @@ const search = async (req, res) => {
 
 const productOther = async (req, res) => {
     const queryParams = req.query;
+    const sex = queryParams.sex || "all";
+    const category = queryParams.category || "all";
     const page = parseInt(queryParams.page) || 1;
     const limit = parseInt(queryParams.limit) || 9;
     const skip = (page - 1) * limit;
@@ -195,6 +197,13 @@ const productOther = async (req, res) => {
     };
 
     let sortQuery = {};
+    if (category !== "all") {
+        query.category = category;
+    }
+    if (sex !== "all") {
+        query.sex = sex;
+    }
+
     if (sort === "topsales") {
         sortQuery = { count_sales: -1 };
     } else if (sort === "new") {

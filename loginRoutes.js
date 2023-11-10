@@ -62,7 +62,7 @@ const isValideToken = async (req, res) =>{
         if(!isUserBase){
             return res.send({
                 status:400,
-                "user auth": false
+                "userauth": false
             })
         }
 

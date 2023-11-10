@@ -26,5 +26,6 @@ const authMiddleware = (req, res, next) =>{
             "user auth": false
         })
     }
+
 }
 module.exports = authMiddleware

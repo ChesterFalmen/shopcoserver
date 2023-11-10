@@ -11,7 +11,10 @@ const authMiddleware = (req, res, next) =>{
             //     status:407,
             //     "message": "user not auth"
             // })
-            return res.status(403).json({status:407,"message":"user not auth"});
+            return res.send({
+                status:401,
+                "userauth": false
+            })
         }
         const decodeData = jwt.verify(token, secret);
         req.user = decodeData;

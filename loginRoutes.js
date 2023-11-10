@@ -68,7 +68,7 @@ const isValideToken = async (req, res) =>{
 
         return res.send({
             status:200,
-            "user auth": true
+            "userauth": true
         })
 
     }catch (errors){

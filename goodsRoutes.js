@@ -28,17 +28,17 @@ const getOneGood = async (req, res) => {
 };
 
 
-const getRecentGoods = async (req, res) => {
-    try {
-        const data = await goodsDB.find().toArray();
-        const count_goods_arr = data.length;
-        const data_new = data.slice(count_goods_arr - req.params.count);
-        data_new.reverse();
-        res.send(data_new);
-    } catch (error) {
-        res.status(500).send("Server Error");
-    }
-};
+// const getRecentGoods = async (req, res) => {
+//     try {
+//         const data = await goodsDB.find().toArray();
+//         const count_goods_arr = data.length;
+//         const data_new = data.slice(count_goods_arr - req.params.count);
+//         data_new.reverse();
+//         res.send(data_new);
+//     } catch (error) {
+//         res.status(500).send("Server Error");
+//     }
+// };
 
 
 
@@ -153,36 +153,36 @@ const addGood = async (req,res) => {
 
 
 
-const getSaleGoods = async (req, res) =>{
-    try{
-        const data = await goodsDB.find().toArray();
-        const filteredArr = data.filter(item => !!item.discount );
-        res.send(filteredArr)
-    }catch (error) {
-        res.status(500).send("Server Error");
-    }
-}
+// const getSaleGoods = async (req, res) =>{
+//     try{
+//         const data = await goodsDB.find().toArray();
+//         const filteredArr = data.filter(item => !!item.discount );
+//         res.send(filteredArr)
+//     }catch (error) {
+//         res.status(500).send("Server Error");
+//     }
+// }
 
-const search = async (req, res) => {
-    const searchString = req.body.word
-    try{
-        const searchFields = ["name", "description", "category", "style", ];
-        const query = {
-            $or: searchFields.map(field => ({ [field]: { $regex: searchString, $options: "i" } }))
-        };
-        const resultArray = await goodsDB.find(query).toArray();
-        return res.send({
-            status:200,
-            resultArray
-        })
-
-    }catch (error) {
-        return res.send({
-            status:500,
-            message:"Server Error in user processing"
-        })
-    }
-}
+// const search = async (req, res) => {
+//     const searchString = req.body.word
+//     try{
+//         const searchFields = ["name", "description", "category", "style", ];
+//         const query = {
+//             $or: searchFields.map(field => ({ [field]: { $regex: searchString, $options: "i" } }))
+//         };
+//         const resultArray = await goodsDB.find(query).toArray();
+//         return res.send({
+//             status:200,
+//             resultArray
+//         })
+//
+//     }catch (error) {
+//         return res.send({
+//             status:500,
+//             message:"Server Error in user processing"
+//         })
+//     }
+// }
 
 const productOther = async (req, res) => {
     const queryParams = req.query;
@@ -324,15 +324,15 @@ const product = async (req, res) => {
 module.exports = {
     // getAllGoods,
     getOneGood,
-    getRecentGoods,
+    // getRecentGoods,
     // getRatingGoods,
     // getGoodsByCategory,
     // getGoodsByStyle,
     // getGoodsBySex,
     addGood,
-    getSaleGoods,
+    // getSaleGoods,
     // updateFinalPrise,
-    search,
+    // search,
     product,
     productOther
 };

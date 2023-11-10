@@ -23,13 +23,24 @@ router.get('/api/productother', goodsRoutes.productOther);
 
 
 router.get('/api/oneGoods/:id', goodsRoutes.getOneGood);
-router.get('/api/goods/:count', goodsRoutes.getRecentGoods);
+// router.get('/api/goods/:count', goodsRoutes.getRecentGoods);
 // router.get('/api/getRatingGoods/:count', goodsRoutes.getRatingGoods);
-router.get('/api/getAllComments', commentsRoutes.getAllComments);
-router.get('/api/comments/:id', commentsRoutes.getCommentsByGoodId);
+// router.get('/api/getAllComments', commentsRoutes.getAllComments);
+
+
+router.get('/api/getcomments/', commentsRoutes.getComments);
+
+
+
+//
+// router.get('/api/comments/:id', commentsRoutes.getCommentsByGoodId);
+
+
+
+
 router.post('/api/comments/add', commentsRoutes.addComment);
 // router.post('/api/goods/updatePrice', goodsRoutes.updateFinalPrise);
-router.get('/api/getCountComments/:count', commentsRoutes.getRecentComments);
+// router.get('/api/getCountComments/:count', commentsRoutes.getRecentComments);
 // router.get('/api/category/:category', goodsRoutes.getGoodsByCategory);
 // router.get('/api/styles/:style', goodsRoutes.getGoodsByStyle);
 // router.get('/api/sex/:sex', goodsRoutes.getGoodsBySex);
@@ -61,9 +72,9 @@ router.post('/api/resetPassword',users.resetPassword);
 
 router.get('/api/banners', bannersRoutes.getBanners);
 router.get('/api/loginBanner', bannersRoutes.getLoginBanner);
-router.get('/api/getSaleGoods', goodsRoutes.getSaleGoods);
-
-router.post('/api/search', goodsRoutes.search);
+// router.get('/api/getSaleGoods', goodsRoutes.getSaleGoods);
+//
+// router.post('/api/search', goodsRoutes.search);
 
 router.post('/api/mergeBasket', authMiddleware, basket.mergeBasket);
 router.post('/api/refreshBasket', authMiddleware, basket.refreshBasket);

@@ -6,11 +6,6 @@ const authMiddleware = (req, res, next) =>{
     try {
         const token = req.headers.authorization;
         if(!token){
-
-            // res.send({
-            //     status:407,
-            //     "message": "user not auth"
-            // })
             return res.send({
                 status:401,
                 "userauth": false

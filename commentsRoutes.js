@@ -13,15 +13,15 @@ const commentsDB = client.db('shopco').collection('comments')
 //     }
 // }
 
-
-const getCommentsByGoodId = async (req, res) => {
-    try{
-        const data = await commentsDB.find({id_good: req.params.id}).toArray()
-        res.send(data)
-    }catch (error) {
-        res.status(500).send("Server Error");
-    }
-}
+//
+// const getCommentsByGoodId = async (req, res) => {
+//     try{
+//         const data = await commentsDB.find({id_good: req.params.id}).toArray()
+//         res.send(data)
+//     }catch (error) {
+//         res.status(500).send("Server Error");
+//     }
+// }
 
 
 
@@ -101,7 +101,7 @@ const getComments = async (req, res) => {
 // })
 
 module.exports = {
-    getCommentsByGoodId,
+    // getCommentsByGoodId,
     addComment,
     getComments
 };

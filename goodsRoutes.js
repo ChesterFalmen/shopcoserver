@@ -4,15 +4,6 @@ const {ObjectId} = require("mongodb");
 const goodsDB = client.db('shopco').collection('goods')
 
 
-const getAllGoods = async (req, res) => {
-    try {
-        const data = await goodsDB.find().toArray();
-        res.send(data);
-    } catch (error) {
-        res.status(500).send("Server Error");
-    }
-};
-
 
 const getOneGood = async (req, res) => {
     try {
@@ -26,67 +17,6 @@ const getOneGood = async (req, res) => {
         res.status(500).send("Server Error");
     }
 };
-
-
-// const getRecentGoods = async (req, res) => {
-//     try {
-//         const data = await goodsDB.find().toArray();
-//         const count_goods_arr = data.length;
-//         const data_new = data.slice(count_goods_arr - req.params.count);
-//         data_new.reverse();
-//         res.send(data_new);
-//     } catch (error) {
-//         res.status(500).send("Server Error");
-//     }
-// };
-
-
-
-// const getRatingGoods = async (req, res) =>{
-//     try{
-//         const data = await goodsDB.find().toArray();
-//         const sortData = data.sort((a, b) => b.count_sales - a.count_sales)
-//         const newData = sortData.slice(0, req.params.count);
-//         res.send(newData)
-//     }catch (error) {
-//         res.status(500).send("Server Error");
-//     }
-// }
-
-
-// const getGoodsByCategory = async (req,res) => {
-//     try {
-//         const data = await goodsDB.find({category : req.params.category}).toArray();
-//         res.send(data);
-//     }catch (error) {
-//         res.status(500).send("Server Error");
-//     }
-// }
-
-
-
-// const getGoodsByStyle = async (req, res) => {
-//     try{
-//         const data = await goodsDB.find( {style: req.params.style}).toArray(function (err, result) {
-//             if (err) throw err;
-//             console.log(result);
-//         });
-//         res.send(data);
-//     }catch (error) {
-//         res.status(500).send("Server Error");
-//     }
-// }
-
-
-
-// const getGoodsBySex = async (req, res) =>{
-//     try{
-//         const data = await goodsDB.find({sex: req.params.sex}).toArray();
-//         res.send(data);
-//     }catch (error) {
-//         res.status(500).send("Server Error");
-//     }
-// }
 
 
 
@@ -126,63 +56,7 @@ const addGood = async (req,res) => {
     }
 }
 
-// const updateFinalPrise = async (req, res) => {
-//     try{
-//
-//         const documents = await goodsDB.find({}).toArray();
-//
-//         // Обновим каждый документ, вычислив final_price и обновив запись
-//         for (const doc of documents) {
-//             const price = doc.price;
-//             const discount = doc.discount;
-//             const finalPrice = price - ((price * discount) / 100);
-//
-//             // Обновляем документ с новым полем final_price
-//             await goodsDB.updateOne(
-//                 { _id: doc._id },
-//                 { $set: { final_price: finalPrice } }
-//             );
-//         }
-//         res.send({status:200})
-//
-//         console.log('final_price был добавлен в каждую запись коллекции.');
-//     }catch (error) {
-//         res.status(500).send("Server Error");
-//     }
-// }
 
-
-
-// const getSaleGoods = async (req, res) =>{
-//     try{
-//         const data = await goodsDB.find().toArray();
-//         const filteredArr = data.filter(item => !!item.discount );
-//         res.send(filteredArr)
-//     }catch (error) {
-//         res.status(500).send("Server Error");
-//     }
-// }
-
-// const search = async (req, res) => {
-//     const searchString = req.body.word
-//     try{
-//         const searchFields = ["name", "description", "category", "style", ];
-//         const query = {
-//             $or: searchFields.map(field => ({ [field]: { $regex: searchString, $options: "i" } }))
-//         };
-//         const resultArray = await goodsDB.find(query).toArray();
-//         return res.send({
-//             status:200,
-//             resultArray
-//         })
-//
-//     }catch (error) {
-//         return res.send({
-//             status:500,
-//             message:"Server Error in user processing"
-//         })
-//     }
-// }
 
 const productOther = async (req, res) => {
     const queryParams = req.query;
@@ -322,17 +196,8 @@ const product = async (req, res) => {
 
 
 module.exports = {
-    getAllGoods,
     getOneGood,
-    // getRecentGoods,
-    // getRatingGoods,
-    // getGoodsByCategory,
-    // getGoodsByStyle,
-    // getGoodsBySex,
     addGood,
-    // getSaleGoods,
-    // updateFinalPrise,
-    // search,
     product,
     productOther
 };

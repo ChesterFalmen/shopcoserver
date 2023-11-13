@@ -67,22 +67,6 @@ router.post('/api/registration',[
 router.post('/api/login', loginUser.loginUser);
 
 
-// router.post('/api/goods/updatePrice', goodsRoutes.updateFinalPrise);
-// router.get('/api/getCountComments/:count', commentsRoutes.getRecentComments);
-// router.get('/api/category/:category', goodsRoutes.getGoodsByCategory);
-// router.get('/api/styles/:style', goodsRoutes.getGoodsByStyle);
-// router.get('/api/sex/:sex', goodsRoutes.getGoodsBySex);
-// router.get('/api/getSaleGoods', goodsRoutes.getSaleGoods);
-//
-// router.post('/api/search', goodsRoutes.search);
-
-// router.post('/api/orders/add', authMiddleware ,productAvailabilityMiddleware,orders.ordersAdd);
-
-//
-// router.get('/api/comments/:id', commentsRoutes.getCommentsByGoodId);
-// router.get('/api/goods/:count', goodsRoutes.getRecentGoods);
-// router.get('/api/getRatingGoods/:count', goodsRoutes.getRatingGoods);
-// router.get('/api/getAllComments', commentsRoutes.getAllComments);
 
 router.get('/api/goods', goodsRoutes.getAllGoods);
 

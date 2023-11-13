@@ -3,15 +3,15 @@ const {ObjectId} = require("mongodb");
 
 const goodsDB = client.db('shopco').collection('goods')
 
-//
-// const getAllGoods = async (req, res) => {
-//     try {
-//         const data = await goodsDB.find().toArray();
-//         res.send(data);
-//     } catch (error) {
-//         res.status(500).send("Server Error");
-//     }
-// };
+
+const getAllGoods = async (req, res) => {
+    try {
+        const data = await goodsDB.find().toArray();
+        res.send(data);
+    } catch (error) {
+        res.status(500).send("Server Error");
+    }
+};
 
 
 const getOneGood = async (req, res) => {
@@ -322,7 +322,7 @@ const product = async (req, res) => {
 
 
 module.exports = {
-    // getAllGoods,
+    getAllGoods,
     getOneGood,
     // getRecentGoods,
     // getRatingGoods,

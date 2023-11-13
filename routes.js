@@ -84,7 +84,7 @@ router.post('/api/login', loginUser.loginUser);
 // router.get('/api/getRatingGoods/:count', goodsRoutes.getRatingGoods);
 // router.get('/api/getAllComments', commentsRoutes.getAllComments);
 
-// router.get('/api/goods', goodsRoutes.getAllGoods);
+router.get('/api/goods', goodsRoutes.getAllGoods);
 
 
 module.exports = router

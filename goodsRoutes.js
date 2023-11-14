@@ -81,7 +81,7 @@ const productOther = async (req, res) => {
     if (sort === "topsales") {
         sortQuery = { count_sales: -1 };
     } else if (sort === "new") {
-        sortQuery = { _id: 1 };
+        sortQuery = { _id: -1 };
     }
 
     try {

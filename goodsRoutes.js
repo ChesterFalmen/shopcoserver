@@ -81,21 +81,19 @@ const productOther = async (req, res) => {
     if (sort === "topsales") {
         sortQuery = { count_sales: -1 };
     } else if (sort === "new") {
-        sortQuery = {_id: -1 };
+        sortQuery = { _id: 1 };
     }
 
     try {
-
         const products = await goodsDB.find(query).sort(sortQuery).skip(skip).limit(limit).toArray();
         res.send({
-            status:200,
+            status: 200,
             products
-        })
-
+        });
     } catch (error) {
         return res.status(500).send({
             status: 500,
-            message: "Server Error in user processing"
+            message: "no goods"
         });
     }
 };

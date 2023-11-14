@@ -68,7 +68,7 @@ router.post('/api/login', loginUser.loginUser);
 
 
 
-router.get('/api/goods', goodsRoutes.getAllGoods);
+// router.get('/api/goods', goodsRoutes.getAllGoods);
 
 
 module.exports = router

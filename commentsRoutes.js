@@ -1,27 +1,11 @@
 const {client} = require("./db")
+const decodeToken = require("./decoder/decoder");
+const {ObjectId} = require("mongodb");
 
-const commentsDB = client.db('shopco').collection('comments')
+const commentsDB = client.db('shopco').collection('comments');
+const ordersDB = client.db('shopco').collection('orders');
+const usersDB = client.db('shopco').collection('users');
 
-
-// const getAllComments = async (req, res) => {
-//     try{
-//         const data = await commentsDB.find().toArray();
-//         data.reverse();
-//         res.send(data)
-//     }catch (error) {
-//         res.status(500).send("Server Error");
-//     }
-// }
-
-//
-// const getCommentsByGoodId = async (req, res) => {
-//     try{
-//         const data = await commentsDB.find({id_good: req.params.id}).toArray()
-//         res.send(data)
-//     }catch (error) {
-//         res.status(500).send("Server Error");
-//     }
-// }
 
 
 
@@ -73,35 +57,73 @@ const getComments = async (req, res) => {
     }
 }
 
-// const getComments = async (req, res) => {
-//     try{
-//         const data = await commentsDB.find().toArray();
-//         const count_goods_arr = data.length;
-//         console.log(count_goods_arr);
-//         const data_new = data.slice(count_goods_arr-req.params.count);
-//         data_new.reverse();
-//         res.send(data_new)
-//
-//     }catch (error) {
-//         res.status(500).send("Server Error");
-//     }
-// }
+const isHasAddComments = async (req, res) => {
+    const userIdCoded = req.headers.authorization;
+    const body = req.body
+    const userIdDecoded = decodeToken(userIdCoded);
+
+    const query = {
+        'goods': {
+            '$elemMatch': {
+                '_id': `${body.id_good}`
+            }
+        },
+        'user': `${userIdDecoded}`
+    };
+
+    try{
+        const data = await ordersDB.find(query).toArray();
+        if(data.length >0){
+            res.send({
+                status: 200,
+                userHasAdd : true,
+
+            });
+        } else {
+            res.send({
+                status: 403,
+                userHasAdd : false,
+            });
+        }
+
+    }catch (error) {
+        res.status(500).send("Server Error");
+    }
+}
+
+const postComments = async (req, res) => {
+    const userIdCoded = req.headers.authorization;
+    const userIdDecoded = decodeToken(userIdCoded);
+    const{id_good, text, rating}=req.body
+    const userId = new ObjectId(userIdDecoded);
+
+    try{
+        const user = await usersDB.findOne({ _id: userId });
+        const newComment = {
+            id_good, text, rating, firstName:user.userName, lastName:user.userName
+        }
+        await commentsDB.insertOne(newComment)
+        res.send({
+            status: 200,
+            newComment
+        });
 
 
 
-//
-// /* Отримати останні count коментарів */
-// app.get('/api/getCountComments/:count', async (req, res)=>{
-//     const data = await commentsDB.find().toArray();
-//     const count_goods_arr = data.length;
-//     console.log(count_goods_arr);
-//     const data_new = data.slice(count_goods_arr-req.params.count);
-//     data_new.reverse();
-//     res.send(data_new)
-// })
+    }catch (error) {
+        res.status(500).send("Server Error");
+    }
+}
+
+
+
+
+
 
 module.exports = {
-    // getCommentsByGoodId,
+    isHasAddComments,
+    postComments,
+
     addComment,
     getComments
 };

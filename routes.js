@@ -26,6 +26,14 @@ router.post('/api/goods/add',goodsRoutes.addGood);
 
 router.get('/api/getcomments/', commentsRoutes.getComments);
 router.post('/api/comments/add', commentsRoutes.addComment);
+//////////////////////////////////////////////
+
+
+
+router.post('/api/hascommentsadd',authMiddleware,  commentsRoutes.isHasAddComments);
+router.post('/api/postcomments',authMiddleware,  commentsRoutes.postComments);
+
+//////////
 
 router.get('/api/banners', bannersRoutes.getBanners);
 router.get('/api/loginBanner', bannersRoutes.getLoginBanner);

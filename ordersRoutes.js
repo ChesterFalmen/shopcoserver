@@ -7,6 +7,7 @@ const modifyArray = require("./createrNewArrSizes/createrNewArrSizes")
 const ordersDB = client.db('shopco').collection('orders');
 const usersDB = client.db('shopco').collection('users');
 const goodsDB = client.db('shopco').collection('goods');
+const basketDB = client.db('shopco').collection('basket');
 
 
 
@@ -39,6 +40,12 @@ const ordersAdd = async (req, res) => {
                 orderDate:orderDate,
                 totalValue:totalValue,
                 isOpen:true});
+
+        await basketDB.updateOne(
+            {user:req.user.toString()},
+            {$set:{basket:[]}}
+
+        )
 
         await sendMailServiceMassage(userEmail.email, insertedId.toString());
         res.send({

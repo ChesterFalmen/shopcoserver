@@ -9,25 +9,25 @@ const usersDB = client.db('shopco').collection('users');
 
 
 
-const addComment = async (req, res) => {
-    try{
-        const data = req.body;
-        if(data){
-            await commentsDB.insertOne(data)
-            res.send({
-                status:200,
-                text : "Done"
-            })
-        }else{
-            res.send({
-                status:200,
-                text : "Sorry. Body is empty"
-            })
-        }
-    }catch (error) {
-        res.status(500).send("Server Error");
-    }
-}
+// const addComment = async (req, res) => {
+//     try{
+//         const data = req.body;
+//         if(data){
+//             await commentsDB.insertOne(data)
+//             res.send({
+//                 status:200,
+//                 text : "Done"
+//             })
+//         }else{
+//             res.send({
+//                 status:200,
+//                 text : "Sorry. Body is empty"
+//             })
+//         }
+//     }catch (error) {
+//         res.status(500).send("Server Error");
+//     }
+// }
 
 
 const getComments = async (req, res) => {
@@ -123,7 +123,7 @@ const postComments = async (req, res) => {
 module.exports = {
     isHasAddComments,
     postComments,
-
-    addComment,
+    //
+    // addComment,
     getComments
 };

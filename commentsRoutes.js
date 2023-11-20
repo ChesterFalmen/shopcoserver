@@ -32,7 +32,7 @@ const usersDB = client.db('shopco').collection('users');
 
 const getComments = async (req, res) => {
     const queryParams = req.query;
-    const good =queryParams.good || "all";
+    const good = queryParams.good || "all";
     const page = parseInt(queryParams.page) || 1;
     const limit = parseInt(queryParams.limit) || 9;
     const skip = (page - 1) * limit;
@@ -45,17 +45,18 @@ const getComments = async (req, res) => {
 
     let sortQuery = {};
     if (sort === "new") {
-        sortQuery = {_id: -1}
+        sortQuery = { _id: -1 };
     }
 
-    try{
-        const data = await commentsDB.find(query).sort(sortQuery).skip(skip).limit(limit).toArray();
-        res.send(data)
-
-    }catch (error) {
+    try {
+        const cursor = commentsDB.find(query).sort(sortQuery).skip(skip).limit(limit);
+        const data = await cursor.toArray();
+        res.send(data);
+    } catch (error) {
+        console.error(error);
         res.status(500).send("Server Error");
     }
-}
+};
 
 const isHasAddComments = async (req, res) => {
     const userIdCoded = req.headers.authorization;

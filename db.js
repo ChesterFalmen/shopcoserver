@@ -5,7 +5,7 @@ const options = {
     serverSelectionTimeoutMS: 60000,
     maxPoolSize: 50,
     wtimeoutMS: 25000,
-    ssl:true
+
 };
 
 const client = new MongoClient(config.MONGO_CONNECTION_STRING, options);

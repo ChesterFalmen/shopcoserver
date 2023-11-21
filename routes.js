@@ -18,20 +18,20 @@ const basket = require("./basketRoutes")
 
 
 router.get('/api/product', goodsRoutes.product);
-router.get('/api/productother', goodsRoutes.productOther);
+router.get('/api/productOther', goodsRoutes.productOther);
 router.get('/api/oneGoods/:id', goodsRoutes.getOneGood);
 router.post('/api/goods/add',goodsRoutes.addGood);
 
 
 
-router.get('/api/getcomments/', commentsRoutes.getComments);
+router.get('/api/getComments/', commentsRoutes.getComments);
 // router.post('/api/comments/add', commentsRoutes.addComment);
 //////////////////////////////////////////////
 
 
 
-router.post('/api/hascommentsadd',authMiddleware,  commentsRoutes.isHasAddComments);
-router.post('/api/postcomments',authMiddleware,  commentsRoutes.postComments);
+router.post('/api/hasCommentsAdd',authMiddleware,  commentsRoutes.isHasAddComments);
+router.post('/api/postComments',authMiddleware,  commentsRoutes.postComments);
 
 //////////
 

@@ -1,6 +1,6 @@
-// const str = require("./MONGO.js")
-// const gmail = require("./GMAIL")
-// const uri = require("./URI")
+const str = require("./MONGO.js")
+const gmail = require("./GMAIL")
+const uri = require("./URI")
 //
 // const MONGO_CONNECTION_STRING = str.MONGO
 // const GMAIL_CONNECTION_STRING = gmail.GMAIL

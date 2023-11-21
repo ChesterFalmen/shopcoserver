@@ -56,7 +56,7 @@ const getComments = async (req, res) => {
         res.send(data);
     } catch (error) {
         console.error(error);
-        res.status(500).send("Server Error");
+        res.status(500).send("Server Errorcccc");
     }
 };
 
@@ -91,7 +91,7 @@ const isHasAddComments = async (req, res) => {
         }
 
     }catch (error) {
-        res.status(500).send("Server Error");
+        res.status(500).send("Server Errorttttt");
     }
 }
 
@@ -115,7 +115,7 @@ const postComments = async (req, res) => {
 
 
     }catch (error) {
-        res.status(500).send("Server Error");
+        res.status(500).send("Server Erroryyyy");
     }
 }
 

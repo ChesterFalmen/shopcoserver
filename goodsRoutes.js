@@ -1,11 +1,13 @@
 const {client} = require("./db")
 const {ObjectId} = require("mongodb");
 
-const goodsDB = client.db('shopco').collection('goods')
+
 
 
 
 const getOneGood = async (req, res) => {
+    const goodsDB = client.db('shopco').collection('goods')
+    console.log("goodsDB");
     try {
         const data = await goodsDB.findOne({ _id: new ObjectId(req.params.id) });
         if (data) {
@@ -14,13 +16,14 @@ const getOneGood = async (req, res) => {
             res.status(404).send("Good not found");
         }
     } catch (error) {
-        res.status(500).send("Server Error");
+        res.status(500).send("Server Error111");
     }
 };
 
 
 
 const addGood = async (req,res) => {
+    const goodsDB = client.db('shopco').collection('goods')
     try{
         const name = req.body.name;//string
         const price = parseInt(req.body.price);//int32
@@ -52,13 +55,15 @@ const addGood = async (req,res) => {
         }
 
     }catch (error) {
-        res.status(500).send("Server Error");
+        res.status(500).send("Server Error222");
     }
 }
 
 
 
 const productOther = async (req, res) => {
+    try {
+    const goodsDB = client.db('shopco').collection('goods')
     const queryParams = req.query;
     const sex = queryParams.sex || "all";
     const category = queryParams.category || "all";
@@ -84,11 +89,9 @@ const productOther = async (req, res) => {
         sortQuery = { _id: -1 };
     }
 
-    try {
+
         console.log(" productOther query",query);
-        console.log(" productOther sortQuery",sortQuery);
-        console.log(" productOther skip",skip);
-        console.log(" productOther limit",limit);
+
         const cursor = await goodsDB.find(query).sort(sortQuery).skip(skip).limit(limit);
 
         const products = await cursor.toArray();
@@ -98,8 +101,8 @@ const productOther = async (req, res) => {
             products
         });
     } catch (error) {
-        return res.status(500).send({
-            status: 500,
+        return res.status(505).send({
+            status: 505,
             message: "no goods"
         });
     }
@@ -107,7 +110,9 @@ const productOther = async (req, res) => {
 
 
 
+
 const product = async (req, res) => {
+    const goodsDB = client.db('shopco').collection('goods')
     const queryParams = req.query;
     const search = queryParams.search || "all";
     const sex = queryParams.sex || "all";

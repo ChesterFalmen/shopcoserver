@@ -2,8 +2,6 @@ const { MongoClient } = require('mongodb');
 const config = require("./config");
 
 const options = {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
     serverSelectionTimeoutMS: 60000,
     maxPoolSize: 50,
     wtimeoutMS: 25000,

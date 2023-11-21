@@ -17,8 +17,10 @@ const getBanners = async (req, res) =>{
 
 
 const getLoginBanner = async (req, res) =>{
+    console.log("getLoginBanner");
     try{
         const data = await bannerLoginDB.findOne();
+        console.log(data);
         res.send(data);
     }catch (error) {
         res.status(500).send("Server Error");

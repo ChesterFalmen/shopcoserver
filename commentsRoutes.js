@@ -49,6 +49,7 @@ const getComments = async (req, res) => {
     }
 
     try {
+        console.log("getComments try");
         const cursor = await commentsDB.find(query).sort(sortQuery).skip(skip).limit(limit);
         const data = await cursor.toArray();
         res.send(data);

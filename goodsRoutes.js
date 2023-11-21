@@ -1,11 +1,12 @@
 const {client} = require("./db")
 const {ObjectId} = require("mongodb");
 
-const goodsDB = client.db('shopco').collection('goods')
+
 
 
 
 const getOneGood = async (req, res) => {
+    const goodsDB = client.db('shopco').collection('goods')
     try {
         const data = await goodsDB.findOne({ _id: new ObjectId(req.params.id) });
         if (data) {
@@ -21,6 +22,7 @@ const getOneGood = async (req, res) => {
 
 
 const addGood = async (req,res) => {
+    const goodsDB = client.db('shopco').collection('goods')
     try{
         const name = req.body.name;//string
         const price = parseInt(req.body.price);//int32
@@ -59,6 +61,7 @@ const addGood = async (req,res) => {
 
 
 const productOther = async (req, res) => {
+    const goodsDB = client.db('shopco').collection('goods')
     const queryParams = req.query;
     const sex = queryParams.sex || "all";
     const category = queryParams.category || "all";
@@ -108,6 +111,7 @@ const productOther = async (req, res) => {
 
 
 const product = async (req, res) => {
+    const goodsDB = client.db('shopco').collection('goods')
     const queryParams = req.query;
     const search = queryParams.search || "all";
     const sex = queryParams.sex || "all";

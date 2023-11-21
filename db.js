@@ -1,7 +1,13 @@
 const { MongoClient } = require('mongodb');
 const config = require("./config");
 
-const client = new MongoClient(config.MONGO_CONNECTION_STRING);
+const options = {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 60000
+};
+
+const client = new MongoClient(config.MONGO_CONNECTION_STRING, options);
 
 async function connect() {
     await client.connect();

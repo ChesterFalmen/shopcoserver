@@ -119,13 +119,8 @@ const postComments = async (req, res) => {
 
 
 
-
-
-
 module.exports = {
     isHasAddComments,
     postComments,
-    //
-    // addComment,
     getComments
 };

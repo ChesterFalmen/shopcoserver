@@ -85,8 +85,14 @@ const productOther = async (req, res) => {
     }
 
     try {
+        console.log(" productOther query",query);
+        console.log(" productOther sortQuery",sortQuery);
+        console.log(" productOther skip",skip);
+        console.log(" productOther limit",limit);
         const cursor = await goodsDB.find(query).sort(sortQuery).skip(skip).limit(limit);
+
         const products = await cursor.toArray();
+        console.log("productOther limit", products);
         res.send({
             status: 200,
             products

@@ -16,9 +16,9 @@ const authMiddlewareBasket = require("./authMiddleware/authMiddlewareBasket");
 const basket = require("./basketRoutes")
 
 
-
-router.get('/api/product', goodsRoutes.product);
 router.get('/api/productOther', goodsRoutes.productOther);
+router.get('/api/product', goodsRoutes.product);
+
 router.get('/api/oneGoods/:id', goodsRoutes.getOneGood);
 router.post('/api/goods/add',goodsRoutes.addGood);
 

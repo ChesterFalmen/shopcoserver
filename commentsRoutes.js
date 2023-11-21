@@ -31,6 +31,7 @@ const usersDB = client.db('shopco').collection('users');
 
 
 const getComments = async (req, res) => {
+    console.log("getComments");
     const queryParams = req.query;
     const good = queryParams.good || "all";
     const page = parseInt(queryParams.page) || 1;

@@ -73,7 +73,8 @@ const isHasAddComments = async (req, res) => {
     };
 
     try{
-        const data = await ordersDB.find(query).toArray();
+        const cursor = await ordersDB.find(query);
+        const data = await cursor.toArray();
         if(data.length >0){
             res.send({
                 status: 200,

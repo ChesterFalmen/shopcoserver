@@ -5,7 +5,8 @@ const bannerLoginDB = client.db('shopco').collection('loginBanner')
 
 const getBanners = async (req, res) =>{
     try{
-        const data = await bannersDB.find().toArray();
+        const cursor = await bannersDB.find();
+        const data = await cursor.toArray();
         res.send(data);
     }
     catch (error) {

@@ -1,13 +1,10 @@
 const {client} = require("./db")
 const {ObjectId} = require("mongodb");
 
-
-
-
+const goodsDB = client.db('shopco').collection('goods');
 
 const getOneGood = async (req, res) => {
-    const goodsDB = client.db('shopco').collection('goods')
-    console.log("goodsDB");
+
     try {
         const data = await goodsDB.findOne({ _id: new ObjectId(req.params.id) });
         if (data) {
@@ -23,7 +20,6 @@ const getOneGood = async (req, res) => {
 
 
 const addGood = async (req,res) => {
-    const goodsDB = client.db('shopco').collection('goods')
     try{
         const name = req.body.name;//string
         const price = parseInt(req.body.price);//int32
@@ -62,9 +58,7 @@ const addGood = async (req,res) => {
 
 
 const productOther = async (req, res) => {
-    console.log("Starting product other request!!!");
     try {
-    const goodsDB = client.db('shopco').collection('goods')
     const queryParams = req.query;
     const sex = queryParams.sex || "all";
     const category = queryParams.category || "all";
@@ -90,13 +84,8 @@ const productOther = async (req, res) => {
         sortQuery = { _id: -1 };
     }
 
-
-        console.log(" productOther query",query);
-
-        const cursor = await goodsDB.find(query).sort(sortQuery).skip(skip).limit(limit);
-
-        const products = await cursor.toArray();
-        console.log("productOther limit", products);
+    const cursor = await goodsDB.find(query).sort(sortQuery).skip(skip).limit(limit);
+    const products = await cursor.toArray();
         res.send({
             status: 200,
             products
@@ -114,7 +103,6 @@ const productOther = async (req, res) => {
 
 
 const product = async (req, res) => {
-    const goodsDB = client.db('shopco').collection('goods')
     const queryParams = req.query;
     const search = queryParams.search || "all";
     const sex = queryParams.sex || "all";

@@ -4,7 +4,6 @@ const bannersDB = client.db('shopco').collection('banners')
 const bannerLoginDB = client.db('shopco').collection('loginBanner')
 
 const getBanners = async (req, res) =>{
-    console.log("getBanners");
     try{
         const cursor = await bannersDB.find();
         const data = await cursor.toArray();

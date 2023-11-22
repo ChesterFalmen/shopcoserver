@@ -62,6 +62,7 @@ const addGood = async (req,res) => {
 
 
 const productOther = async (req, res) => {
+    console.log("Starting product other request!!!");
     try {
     const goodsDB = client.db('shopco').collection('goods')
     const queryParams = req.query;
@@ -101,6 +102,7 @@ const productOther = async (req, res) => {
             products
         });
     } catch (error) {
+        console.log(error);
         return res.status(505).send({
             status: 505,
             message: "no goods"

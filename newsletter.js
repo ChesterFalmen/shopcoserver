@@ -10,6 +10,7 @@ const addNewsletter = async (req, res) => {
         email:email
     }
     try {
+        await client.connect()
         const errors = validationResult(req)
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });

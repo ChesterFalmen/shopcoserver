@@ -47,7 +47,9 @@ const refreshBasket = async (req,res) =>{
     const basketUser = await basketDB.findOne({user:userIdDecoded});
 
     try {
+
         if (basketUser){
+            await client.connect()
             await basketDB.updateOne(
                 {user:userIdDecoded},
                 {$set:{basket:basket}}
@@ -58,6 +60,7 @@ const refreshBasket = async (req,res) =>{
                 basket:basket
             })
         }else{
+            await client.connect()
             await basketDB.insertOne({
                 user:userIdDecoded,
                 basket:basket
@@ -77,6 +80,7 @@ const refreshBasket = async (req,res) =>{
 const getBasket = async (req, res)=> {
     const userIdCoded = req.headers.authorization;
     const userIdDecoded = decodeToken(userIdCoded);
+    await client.connect()
     const basketUser = await basketDB.findOne({user:userIdDecoded});
     try{
         if(basketUser){

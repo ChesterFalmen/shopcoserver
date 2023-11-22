@@ -18,6 +18,7 @@ const generationToken = (id) =>{
 
 const registrationUser = async (req, res) =>{
     const {userName, password, email} = req.body;
+    await client.connect()
     const isUserBase = await usersDB.findOne({email: req.body.email});
 
     try{

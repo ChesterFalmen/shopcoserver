@@ -17,6 +17,7 @@ const generationToken = (id) =>{
 const loginUser = async (req, res) => {
     const {password, email} = req.body
     try{
+        await client.connect()
         const isUserBase = await usersDB.findOne({email: email});
 
         if(!isUserBase) {
@@ -58,7 +59,8 @@ const isValideToken = async (req, res) =>{
     const token = req.headers.authorization;
     try{
         const decodeData = jwt.verify(token, secret);
-        const userId = decodeData.id
+        const userId = decodeData.id;
+        await client.connect()
         const isUserBase = await usersDB.findOne({_id: new ObjectId(userId)})
         if(!isUserBase){
             return res.send({

@@ -12,6 +12,7 @@ const supportDB = client.db('shopco').collection('support');
 
 const activityUser = async (req, res) => {
     const userId = new ObjectId(req.params.link);
+    await client.connect()
     const user = await usersDB.findOne({ _id: userId });
     if (!user) {
         throw new Error("User not found");
@@ -29,6 +30,7 @@ const aboutUser = async (req, res) =>{
         const userIdCoded = req.headers.authorization;
         const userIdDecoded = decodeToken(userIdCoded);
         const userId = new ObjectId(userIdDecoded);
+        await client.connect()
         const user = await usersDB.findOne({ _id: userId });
         const { userName, companyName, streetAddress, apartmentInfo, city, phoneNumber, email } = user
         const answer ={userName, companyName, streetAddress, apartmentInfo, city, phoneNumber, email}
@@ -76,6 +78,7 @@ const changeUser = async (req, res) => {
     }
 
     try{
+        await client.connect()
         const userIdCoded = req.headers.authorization;
         const userIdDecoded = decodeToken(userIdCoded);
         if(data){
@@ -98,6 +101,7 @@ const changeUserPass = async (req, res) => {
     const userIdDecoded = decodeToken(userIdCoded);
     const {password, newPassword} = req.body
     try{
+        await client.connect()
         const isUserBase = await usersDB.findOne({_id: new ObjectId(userIdDecoded)})
         if(!isUserBase) {
             return res.send({
@@ -136,6 +140,7 @@ const supportUser = async (req,res) =>{
     const message = req.body
 
     try{
+        await client.connect()
         const data = {message,userName:userIdDecoded}
         const {insertedId} = await supportDB.insertOne(data);
         const idString = insertedId.toString();
@@ -158,6 +163,7 @@ const supportUser = async (req,res) =>{
 const resetPassword = async (req,res) => {
     const emailReq = req.body.email
     try{
+        await client.connect()
         const user = await usersDB.findOne({email: emailReq});
         const userId =user._id.toString()
         const randomPassword =generateRandomPassword(8)
@@ -184,6 +190,7 @@ const resetPassword = async (req,res) => {
 const activityPassword = async (req, res) => {
     const passwordReq = req.params.link;
     const hashPassword = bcrypt.hashSync(passwordReq, 7)
+    await client.connect()
     const user = await usersDB.findOne({ env: passwordReq });
     if (!user) {
         throw new Error("User not found");

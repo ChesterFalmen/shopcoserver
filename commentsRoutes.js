@@ -49,6 +49,7 @@ const getComments = async (req, res) => {
     }
 
     try {
+        await client.connect()
         const cursor = await commentsDB.find(query).sort(sortQuery).skip(skip).limit(limit);
         const data = await cursor.toArray();
         res.send(data);
@@ -73,6 +74,7 @@ const isHasAddComments = async (req, res) => {
     };
 
     try{
+        await client.connect()
         const cursor = await ordersDB.find(query);
         const data = await cursor.toArray();
         if(data.length >0){
@@ -100,6 +102,7 @@ const postComments = async (req, res) => {
     const userId = new ObjectId(userIdDecoded);
 
     try{
+        await client.connect()
         const user = await usersDB.findOne({ _id: userId });
         const newComment = {
             id_good, text, rating, firstName:user.userName, lastName:user.userName

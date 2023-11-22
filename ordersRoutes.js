@@ -17,6 +17,7 @@ const ordersAdd = async (req, res) => {
         const goodsArr = req.body.goods;
         for (let i = 0; i < goodsArr.length; i++) {
             const item = goodsArr[i];
+            await client.connect()
             const goodsId = new ObjectId(item._id);
             const good = await goodsDB.findOne({ _id: goodsId });
             const goodSizes = good.sizes
@@ -35,6 +36,7 @@ const ordersAdd = async (req, res) => {
         const {goods, payment, totalValue, orderDate}= req.body;
         const id = new ObjectId(req.user)
         const userEmail = await usersDB.findOne({_id:id})
+        await client.connect()
         const {insertedId} = await ordersDB.insertOne({user:req.user.toString(), goods,
                 payment:payment,
                 orderDate:orderDate,

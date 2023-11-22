@@ -5,6 +5,8 @@ const options = {
     serverSelectionTimeoutMS: 60000,
     maxPoolSize: 50,
     wtimeoutMS: 25000,
+    useNewUrlParser: true,
+    useUnifiedTopology: true
 
 };
 

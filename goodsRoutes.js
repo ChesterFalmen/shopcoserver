@@ -6,6 +6,7 @@ const goodsDB = client.db('shopco').collection('goods');
 const getOneGood = async (req, res) => {
 
     try {
+        await client.connect()
         const data = await goodsDB.findOne({ _id: new ObjectId(req.params.id) });
         if (data) {
             res.send(data);
@@ -58,7 +59,8 @@ const addGood = async (req,res) => {
 
 
 const productOther = async (req, res) => {
-    try {
+
+
     const queryParams = req.query;
     const sex = queryParams.sex || "all";
     const category = queryParams.category || "all";
@@ -83,13 +85,14 @@ const productOther = async (req, res) => {
     } else if (sort === "new") {
         sortQuery = { _id: -1 };
     }
-
-    const cursor = await goodsDB.find(query).sort(sortQuery).skip(skip).limit(limit);
-    const products = await cursor.toArray();
-        res.send({
-            status: 200,
-            products
-        });
+    try {
+        await client.connect()
+        const cursor = await goodsDB.find(query).sort(sortQuery).skip(skip).limit(limit);
+        const products = await cursor.toArray();
+            res.send({
+                status: 200,
+                products
+            });
     } catch (error) {
         console.log(error);
         return res.status(505).send({
@@ -103,6 +106,7 @@ const productOther = async (req, res) => {
 
 
 const product = async (req, res) => {
+
     const queryParams = req.query;
     const search = queryParams.search || "all";
     const sex = queryParams.sex || "all";
@@ -173,6 +177,7 @@ const product = async (req, res) => {
 
 
     try {
+        await client.connect()
         const totalCount = await goodsDB.countDocuments(query);
         const hasNextPage = skip + limit < totalCount;
         const cursor = await goodsDB.find(query).sort(sortQuery).skip(skip).limit(limit);

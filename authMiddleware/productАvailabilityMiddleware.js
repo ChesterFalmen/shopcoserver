@@ -18,6 +18,7 @@ const productAvailabilityMiddleware = async (req, res, next) => {
         for (let i = 0; i < goodsArr.length; i++) {
             const item = goodsArr[i];
             const goodsId = new ObjectId(item._id);
+            await client.connect()
             const good = await goodsDB.findOne({ _id: goodsId });
             const goodSizes = good.sizes;
             const goodSizesNew = modifyArray(goodSizes, item.selectedSize, item.selectedAmount);

@@ -13,6 +13,7 @@ const authMiddlewareBasket =async (req, res, next) =>{
         try {
             const decodeData = jwt.verify(token, secret);
             const userId = new ObjectId(decodeData.id);
+            await client.connect()
             const user = await usersDB.findOne({ _id: userId });
             if (user) {
                 await usersDB.updateOne(
@@ -42,6 +43,7 @@ const authMiddlewareBasket =async (req, res, next) =>{
 
     if(!token){
         try {
+            await client.connect()
             const user = await usersDB.findOne({ email: email });
             if(user){
                 const id =new ObjectId(user._id.toString())
@@ -72,6 +74,7 @@ const authMiddlewareBasket =async (req, res, next) =>{
                     phoneNumber:phoneNumber,
                     streetAddress:streetAddress
                 }
+                await client.connect()
                 const {insertedId} = await usersDB.insertOne(candidat);
                 req.user = insertedId.toString();
                 next();

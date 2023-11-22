@@ -50,6 +50,7 @@ const ordersUser = async (req, res) =>{
     try {
         const userIdCoded = req.headers.authorization;
         const userIdDecoded = decodeToken(userIdCoded);
+        await client.connect()
         const cursor = await ordersDB.find({ user: userIdDecoded });
         const orders = await cursor.toArray();
         return res.send({

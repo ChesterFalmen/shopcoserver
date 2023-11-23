@@ -20,6 +20,7 @@ router.get('/api/productOther', goodsRoutes.productOther);
 router.get('/api/product', goodsRoutes.product);
 
 router.get('/api/oneGoods/:id', goodsRoutes.getOneGood);
+// router.get('/api/reverce', goodsRoutes.reverceSize);
 router.post('/api/goods/add',goodsRoutes.addGood);
 
 

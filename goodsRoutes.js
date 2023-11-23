@@ -56,6 +56,44 @@ const addGood = async (req,res) => {
     }
 }
 
+// const reverceSize = async (req,res) => {
+//     try{
+//         await client.connect()
+//         const data = await goodsDB.find().toArray();
+//
+//         const db = client.db("shopco");
+//         const collection = db.collection('goods')
+//         //
+//         // await collection.find({}).toArray((err, documents) => {
+//         //     if (err) throw err;
+//
+//             // Оновлення кожного документу, реверсуючи масив sizes
+//         data.forEach((doc) => {
+//                 const reversedSizes = doc.sizes.reverse(); // Реверс масиву sizes
+//             console.log(reversedSizes);
+//             collection.updateOne({_id: doc._id}, {$set: {sizes: reversedSizes}});
+//             // });
+//
+//             console.log(`Оновлено документів`);
+//
+//
+//         });
+//
+//
+//
+//         // res.send({
+//         //     data
+//         // })
+//
+//
+//
+//
+//     }catch (error) {
+//         res.status(500).send("Server Error222");
+//     }
+// }
+//
+
 
 
 const productOther = async (req, res) => {
@@ -204,6 +242,7 @@ module.exports = {
     getOneGood,
     addGood,
     product,
-    productOther
+    productOther,
+    reverceSize
 };
 

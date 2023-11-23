@@ -7,7 +7,8 @@ const mass = passGmail;
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'serhiibondarenko33@gmail.com',
+        // user: 'serhiibondarenko33@gmail.com',
+        user: 'shopcoshopping@gmail.com',
         pass: passGmail
     },
     secure: false,
@@ -29,7 +30,8 @@ const sendMail = async (mailOptions) => {
 
 const sendAddNewsletter = async (email) =>{
     const mailOptions = {
-        from: 'serhiibondarenko33@gmail.com',
+        // from: 'serhiibondarenko33@gmail.com',
+        from: 'shopcoshopping@gmail.com',
         to: email,
         subject: "Thank you for subscribing to the store ShopCo",
         text:"Now you will receive notifications about new products and special offers."
@@ -39,7 +41,8 @@ const sendAddNewsletter = async (email) =>{
 
 const sendMailServiceMassage = async (recipient, order) => {
     const mailOptions = {
-        from: 'serhiibondarenko33@gmail.com',
+        // from: 'serhiibondarenko33@gmail.com',
+        from: 'shopcoshopping@gmail.com',
         to: recipient,
         subject: "Your order has been accepted ShopCo",
         text: `Your order has been processed. You can view the details in your personal account. Order# ${order}`
@@ -49,7 +52,8 @@ const sendMailServiceMassage = async (recipient, order) => {
 
 const sendMailServiceMassageSupport = async (recipient, idMessage) => {
     const mailOptions = {
-        from: 'serhiibondarenko33@gmail.com',
+        from: 'shopcoshopping@gmail.com',
+        // from: 'serhiibondarenko33@gmail.com',
         to: recipient,
         subject: "support service ShopCo",
         text: `Your appeal is registered under the number# ${idMessage}. Wait for our operator to contact you soon`
@@ -59,7 +63,8 @@ const sendMailServiceMassageSupport = async (recipient, idMessage) => {
 
 const sendMailServiceLink = async (recipient, link) => {
     const mailOptions = {
-        from: 'serhiibondarenko33@gmail.com',
+        // from: 'serhiibondarenko33@gmail.com',
+        from: 'shopcoshopping@gmail.com',
         to: recipient,
         subject: "Activate profile ShopCo",
         html: `<div>
@@ -72,7 +77,8 @@ const sendMailServiceLink = async (recipient, link) => {
 
 const sendMailResetPassword = async (recipient, link, password) => {
     const mailOptions = {
-        from: 'serhiibondarenko33@gmail.com',
+        // from: 'serhiibondarenko33@gmail.com',
+        from: 'shopcoshopping@gmail.com',
         to: recipient,
         subject: "Support ShopCo",
         html: `<div>

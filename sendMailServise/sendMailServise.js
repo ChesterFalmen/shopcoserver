@@ -9,7 +9,7 @@ const transporter = nodemailer.createTransport({
     auth: {
         // user: 'serhiibondarenko33@gmail.com',
         user: 'shopcoshopping@gmail.com',
-        pass: passGmail
+        pass: config.GMAIL_CONNECTION_STRING;
     },
     secure: false,
     pool: true,

@@ -12,6 +12,7 @@ const basketDB = client.db('shopco').collection('basket');
 
 
 const ordersAdd = async (req, res) => {
+    console.log("addd")
 
     try {
         const goodsArr = req.body.goods;
@@ -33,6 +34,7 @@ const ordersAdd = async (req, res) => {
     }
 
     try {
+        console.log("addd2")
         const {goods, payment, totalValue, orderDate}= req.body;
         const id = new ObjectId(req.user)
         const userEmail = await usersDB.findOne({_id:id})

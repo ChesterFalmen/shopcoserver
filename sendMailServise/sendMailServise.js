@@ -31,7 +31,6 @@ const sendMail = async (mailOptions) => {
 const sendAddNewsletter = async (email) =>{
     const mailOptions = {
         from: 'serhiibondarenko33@gmail.com',
-        // from: 'shopcoshopping@gmail.com',
         to: email,
         subject: "Thank you for subscribing to the store ShopCo",
         text:"Now you will receive notifications about new products and special offers."

@@ -49,12 +49,12 @@ const ordersAdd = async (req, res) => {
 
         )
 
-        await sendMailServiceMassage(userEmail.email, insertedId.toString());
-        res.send({
-            status: 200,
-            text : "Done",
-
-        });
+        // await sendMailServiceMassage(userEmail.email, insertedId.toString());
+        // res.send({
+        //     status: 200,
+        //     text : "Done",
+        //
+        // });
 
 
     } catch (error) {

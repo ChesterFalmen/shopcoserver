@@ -243,6 +243,6 @@ module.exports = {
     addGood,
     product,
     productOther,
-    reverceSize
+
 };
 

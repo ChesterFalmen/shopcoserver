@@ -3,12 +3,12 @@ const config = require("../config");
 const enb = config.GMAIL_CONNECTION_STRING;
 const passGmail = enb.match(/.{1,4}/g).join(' ');
 const mass = passGmail;
-
+console.log(mass);
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
         user: 'serhiibondarenko33@gmail.com',
-        pass: passGmail
+        pass: mass
     },
     secure: false,
     pool: true,
@@ -85,11 +85,22 @@ const sendMailResetPassword = async (recipient, link, password) => {
 };
 
 
+const sendErr = async (email) =>{
+    const mailOptions = {
+        from: 'serhiibondarenko33@gmail.com',
+        to: email,
+        subject: "Thank you for subscribing to the store ShopCo",
+        text:"Now you will receive notifications about new products and special offers."
+    };
+    return await sendMail(mailOptions);
+}
+
 
 module.exports = {
     sendMailServiceMassage,
     sendMailServiceLink,
     sendMailServiceMassageSupport,
     sendMailResetPassword,
-    sendAddNewsletter
+    sendAddNewsletter,
+    sendErr
 };

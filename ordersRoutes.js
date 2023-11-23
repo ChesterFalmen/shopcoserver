@@ -12,8 +12,6 @@ const basketDB = client.db('shopco').collection('basket');
 
 
 const ordersAdd = async (req, res) => {
-    console.log("addd")
-
     try {
         const goodsArr = req.body.goods;
         for (let i = 0; i < goodsArr.length; i++) {
@@ -34,7 +32,6 @@ const ordersAdd = async (req, res) => {
     }
 
     try {
-        console.log("addd2")
         const {goods, payment, totalValue, orderDate}= req.body;
         const id = new ObjectId(req.user)
         const userEmail = await usersDB.findOne({_id:id})
@@ -50,8 +47,8 @@ const ordersAdd = async (req, res) => {
             {$set:{basket:[]}}
 
         )
-        //
-        // await sendMailServiceMassage(userEmail.email, insertedId.toString());
+
+        await sendMailServiceMassage(userEmail.email, insertedId.toString());
         res.send({
             status: 200,
             text : "Done",

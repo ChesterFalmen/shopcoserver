@@ -29,7 +29,7 @@ const getLoginBanner = async (req, res) =>{
 
 module.exports = {
     getBanners,
-    getLoginBanner
+    getLoginBanner,
 }
 
 

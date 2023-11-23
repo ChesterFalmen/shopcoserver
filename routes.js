@@ -40,12 +40,14 @@ router.get('/api/banners', bannersRoutes.getBanners);
 router.get('/api/loginBanner', bannersRoutes.getLoginBanner);
 
 
+
 router.put('/api/changeUser', authMiddleware ,users.changeUser);
 router.put('/api/changeUserPass',[
     check("password", "Password should be at least 5 characters").isLength({min:5}),
     ],
     authMiddleware ,users.changeUserPass);
 router.post('/api/orders/add', authMiddlewareBasket, productAvailabilityMiddleware ,orders.ordersAdd);
+// router.post('/api/orders/add', orders.ordersAdd);
 
 
 

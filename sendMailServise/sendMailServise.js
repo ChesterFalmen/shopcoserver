@@ -42,6 +42,7 @@ const sendAddNewsletter = async (email) =>{
 const sendMailServiceMassage = async (recipient, order) => {
     const mailOptions = {
         // from: 'serhiibondarenko33@gmail.com',
+
         from: 'shopcoshopping@gmail.com',
         to: recipient,
         subject: "Your order has been accepted ShopCo",

@@ -50,8 +50,8 @@ const ordersAdd = async (req, res) => {
             {$set:{basket:[]}}
 
         )
-
-        await sendMailServiceMassage(userEmail.email, insertedId.toString());
+        //
+        // await sendMailServiceMassage(userEmail.email, insertedId.toString());
         res.send({
             status: 200,
             text : "Done",

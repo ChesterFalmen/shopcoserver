@@ -5,11 +5,10 @@ const passGmail = enb.match(/.{1,4}/g).join(' ');
 const mass = passGmail;
 
 const transporter = nodemailer.createTransport({
-    service:'gmail',
+    service: 'gmail',
     auth: {
         user: 'serhiibondarenko33@gmail.com',
-        // user: 'shopcoshopping@gmail.com',
-        pass: mass
+        pass: passGmail
     },
     secure: false,
     pool: true,
@@ -41,8 +40,6 @@ const sendAddNewsletter = async (email) =>{
 const sendMailServiceMassage = async (recipient, order) => {
     const mailOptions = {
         from: 'serhiibondarenko33@gmail.com',
-
-        // from: 'shopcoshopping@gmail.com',
         to: recipient,
         subject: "Your order has been accepted ShopCo",
         text: `Your order has been processed. You can view the details in your personal account. Order# ${order}`
@@ -52,7 +49,6 @@ const sendMailServiceMassage = async (recipient, order) => {
 
 const sendMailServiceMassageSupport = async (recipient, idMessage) => {
     const mailOptions = {
-        // from: 'shopcoshopping@gmail.com',
         from: 'serhiibondarenko33@gmail.com',
         to: recipient,
         subject: "support service ShopCo",
@@ -64,7 +60,6 @@ const sendMailServiceMassageSupport = async (recipient, idMessage) => {
 const sendMailServiceLink = async (recipient, link) => {
     const mailOptions = {
         from: 'serhiibondarenko33@gmail.com',
-        // from: 'shopcoshopping@gmail.com',
         to: recipient,
         subject: "Activate profile ShopCo",
         html: `<div>
@@ -78,7 +73,6 @@ const sendMailServiceLink = async (recipient, link) => {
 const sendMailResetPassword = async (recipient, link, password) => {
     const mailOptions = {
         from: 'serhiibondarenko33@gmail.com',
-        // from: 'shopcoshopping@gmail.com',
         to: recipient,
         subject: "Support ShopCo",
         html: `<div>

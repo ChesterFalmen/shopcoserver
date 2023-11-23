@@ -5,11 +5,11 @@ const passGmail = enb.match(/.{1,4}/g).join(' ');
 const mass = passGmail;
 
 const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    service:'gmail',
     auth: {
         user: 'serhiibondarenko33@gmail.com',
         // user: 'shopcoshopping@gmail.com',
-        pass: passGmail,
+        pass: config.GMAIL_CONNECTION_STRING,
     },
     secure: false,
     pool: true,

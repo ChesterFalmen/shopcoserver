@@ -23,9 +23,6 @@ async function connect() {
 }
 
 
-// async function connect() {
-//     await client.connect();
-//     console.log('Connected to the database');
-// }
+
 
 module.exports = { connect, client };

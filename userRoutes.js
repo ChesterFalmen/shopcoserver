@@ -188,6 +188,9 @@ const resetPassword = async (req,res) => {
     }
 };
 
+
+
+
 const activityPassword = async (req, res) => {
     const passwordReq = req.params.link;
     const hashPassword = bcrypt.hashSync(passwordReq, 7)

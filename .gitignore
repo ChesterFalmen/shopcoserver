@@ -1,6 +1,9 @@
 node_modules
 package-lock.json
-MONGO.js
+../todoListBack/delete/MONGO.js
 .idea/
+../todoListBack/delete/GMAIL.js
+../todoListBack/delete/URI.js
+MONGO.js
 GMAIL.js
 URI.js

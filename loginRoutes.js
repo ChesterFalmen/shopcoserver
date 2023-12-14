@@ -25,8 +25,6 @@ const loginUser = async (req, res) => {
                 status:400,
                 error:"Incorrect password or email"
             })
-
-
         }
         const validPassword = bcrypt.compareSync(password, isUserBase.password)
 

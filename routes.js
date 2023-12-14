@@ -75,6 +75,13 @@ router.post('/api/registration',[
     check("password", "Password should be at least 5 characters").isLength({min:8})
 ], registrationUser.registrationUser );
 
+router.post('/api/continuewidthgoogle',[
+    check("email", "Invalid email").isEmail({}),
+    check("userName", "No empty").notEmpty(),
+    check("password", "Password should be at least 5 characters").isLength({min:8})
+], registrationUser.continueWidthGoogle );
+
+
 router.post('/api/login', loginUser.loginUser);
 
 

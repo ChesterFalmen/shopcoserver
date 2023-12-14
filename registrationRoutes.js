@@ -139,5 +139,6 @@ const continueWidthGoogle = async (req, res) =>{
 
 
 module.exports = {
-    registrationUser
+    registrationUser,
+    continueWidthGoogle
 }

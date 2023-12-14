@@ -83,7 +83,7 @@ const registrationUser = async (req, res) =>{
 }
 
 const continueWidthGoogle = async (req, res) =>{
-    const {password, email} = req.body;
+    const {userName, password, email} = req.body;
     await client.connect()
     const isUserBase = await usersDB.findOne({email: req.body.email});
 

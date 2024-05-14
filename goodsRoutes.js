@@ -235,6 +235,28 @@ const product = async (req, res) => {
     }
 };
 
+const updateUrl = async (req, res) =>{
+    const id = req.body.id
+    const arrUrls = req.body.urls
+    try{
+        await client.connect()
+        if(id){
+            await goodsDB.updateOne({ _id: new ObjectId(id) },
+                { $set: {url_image: arrUrls}})
+            res.send({
+                status:200,
+                text : "Done"
+            })
+        }
+
+    }catch (error){
+        return res.status(500).send({
+            status: 500,
+            message: "Server Error in user processing"
+        })
+    }
+}
+
 
 
 
@@ -243,6 +265,7 @@ module.exports = {
     addGood,
     product,
     productOther,
+    updateUrl,
 
 };
 
